@@ -1,0 +1,113 @@
+{
+  "metadata" : {
+    "name" : "hello",
+    "user_save_timestamp" : "1970-01-01T00:00:00.000Z",
+    "auto_save_timestamp" : "1970-01-01T00:00:00.000Z",
+    "language_info" : {
+      "name" : "scala",
+      "file_extension" : "scala",
+      "codemirror_mode" : "text/x-scala"
+    },
+    "trusted" : true,
+    "customLocalRepo" : null,
+    "customRepos" : null,
+    "customDeps" : null,
+    "customImports" : null,
+    "customArgs" : null,
+    "customSparkConf" : null
+  },
+  "cells" : [ {
+    "metadata" : {
+      "id" : "DDC30A20A25145AE88616A7D66743FA0"
+    },
+    "cell_type" : "markdown",
+    "source" : "# Hello world in spark notebook"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "983D108771F24EA68ADEBA1564226265"
+    },
+    "cell_type" : "code",
+    "source" : "val msg = \"hello, world!\"\n",
+    "outputs" : [ {
+      "name" : "stdout",
+      "output_type" : "stream",
+      "text" : "msg: String = hello, world!\n"
+    }, {
+      "metadata" : { },
+      "data" : {
+        "text/html" : ""
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 1
+    } ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "8743F4A6AF6143DDA28EDDF0A5DC817A"
+    },
+    "cell_type" : "code",
+    "source" : "msg",
+    "outputs" : [ {
+      "name" : "stdout",
+      "output_type" : "stream",
+      "text" : "res2: String = hello, world!\n"
+    }, {
+      "metadata" : { },
+      "data" : {
+        "text/html" : "hello, world!"
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 2
+    } ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "68D7E4C567F54412861B196DBD62CFBB"
+    },
+    "cell_type" : "code",
+    "source" : "msg.toString",
+    "outputs" : [ {
+      "name" : "stdout",
+      "output_type" : "stream",
+      "text" : "res4: String = hello, world!\n"
+    }, {
+      "metadata" : { },
+      "data" : {
+        "text/html" : "hello, world!"
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 3
+    } ]
+  }, {
+    "metadata" : {
+      "id" : "B7CB490BE6E44B9898F95C57170C48C6"
+    },
+    "cell_type" : "markdown",
+    "source" : "done. that was easy. Now lets see whether we can save it."
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "667C712EBC8E466F9107AC091224379B"
+    },
+    "cell_type" : "code",
+    "source" : "",
+    "outputs" : [ {
+      "metadata" : { },
+      "data" : {
+        "text/html" : ""
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 4
+    } ]
+  } ],
+  "nbformat" : 4
+}
