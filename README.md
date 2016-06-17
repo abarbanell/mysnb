@@ -4,6 +4,9 @@ how to set up (on MacOs):
 
 ## TL;DR
 
+- get Docker for Mac - get the [beta release here](https://blog.docker.com/2016/03/docker-for-mac-windows-beta/)
+- start with this script: 
+
 ```
 $ ./start.sh
 ```
