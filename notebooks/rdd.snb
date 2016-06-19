@@ -1,0 +1,189 @@
+{
+  "metadata" : {
+    "name" : "rdd",
+    "user_save_timestamp" : "1970-01-01T00:00:00.000Z",
+    "auto_save_timestamp" : "1970-01-01T00:00:00.000Z",
+    "language_info" : {
+      "name" : "scala",
+      "file_extension" : "scala",
+      "codemirror_mode" : "text/x-scala"
+    },
+    "trusted" : true,
+    "customLocalRepo" : null,
+    "customRepos" : null,
+    "customDeps" : null,
+    "customImports" : null,
+    "customArgs" : null,
+    "customSparkConf" : null
+  },
+  "cells" : [ {
+    "metadata" : {
+      "id" : "C4F1220DAC9D4D6FA90CAD758E293448"
+    },
+    "cell_type" : "markdown",
+    "source" : "# rdd\nread and write files into rdd's\nand basic operations on the rdd's\n"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "CD328542A0F14A58ACB112C0671CA0E9"
+    },
+    "cell_type" : "code",
+    "source" : "val inputfile = sc.textFile(\"./data/wordcount.txt\")",
+    "outputs" : [ {
+      "name" : "stdout",
+      "output_type" : "stream",
+      "text" : "inputfile: org.apache.spark.rdd.RDD[String] = ./data/wordcount.txt MapPartitionsRDD[1] at textFile at <console>:53\n"
+    }, {
+      "metadata" : { },
+      "data" : {
+        "text/html" : ""
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 1
+    } ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "output_stream_collapsed" : true,
+      "collapsed" : false,
+      "id" : "CFA44B873C2A4155865CD958D4BC20F9"
+    },
+    "cell_type" : "code",
+    "source" : "val counts = inputfile.flatMap(line => line.split(\" \")).map(word => (word, 1)).reduceByKey(_+_);",
+    "outputs" : [ {
+      "name" : "stdout",
+      "output_type" : "stream",
+      "text" : "counts: org.apache.spark.rdd.RDD[(String, Int)] = ShuffledRDD[4] at reduceByKey at <console>:55\n"
+    }, {
+      "metadata" : { },
+      "data" : {
+        "text/html" : ""
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 2
+    } ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "118039BE14014A19967B3CFA69405AB9"
+    },
+    "cell_type" : "code",
+    "source" : "counts.toDebugString",
+    "outputs" : [ {
+      "name" : "stdout",
+      "output_type" : "stream",
+      "text" : "res5: String =\n(2) ShuffledRDD[4] at reduceByKey at <console>:55 []\n +-(2) MapPartitionsRDD[3] at map at <console>:55 []\n    |  MapPartitionsRDD[2] at flatMap at <console>:55 []\n    |  ./data/wordcount.txt MapPartitionsRDD[1] at textFile at <console>:53 []\n    |  ./data/wordcount.txt HadoopRDD[0] at textFile at <console>:53 []\n"
+    }, {
+      "metadata" : { },
+      "data" : {
+        "text/html" : "(2) ShuffledRDD[4] at reduceByKey at &lt;console&gt;:55 []\n +-(2) MapPartitionsRDD[3] at map at &lt;console&gt;:55 []\n    |  MapPartitionsRDD[2] at flatMap at &lt;console&gt;:55 []\n    |  ./data/wordcount.txt MapPartitionsRDD[1] at textFile at &lt;console&gt;:53 []\n    |  ./data/wordcount.txt HadoopRDD[0] at textFile at &lt;console&gt;:53 []"
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 4
+    } ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "presentation" : {
+        "tabs_state" : "{\n  \"tab_id\": \"#tab1421087816-0\"\n}",
+        "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
+      },
+      "id" : "3BE023B3809743FA8F1C7DFDC8568E93"
+    },
+    "cell_type" : "code",
+    "source" : "counts.cache()\n",
+    "outputs" : [ {
+      "name" : "stdout",
+      "output_type" : "stream",
+      "text" : "res9: counts.type = ShuffledRDD[4] at reduceByKey at <console>:55\n"
+    }, {
+      "metadata" : { },
+      "data" : {
+        "text/html" : "ShuffledRDD[4] at reduceByKey at &lt;console&gt;:55"
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 6
+    } ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "presentation" : {
+        "tabs_state" : "{\n  \"tab_id\": \"#tab837684418-0\"\n}",
+        "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
+      },
+      "id" : "02F1DA48C2CB495B86BEE23BFFBF6203"
+    },
+    "cell_type" : "code",
+    "source" : "counts.take(5)",
+    "outputs" : [ {
+      "name" : "stdout",
+      "output_type" : "stream",
+      "text" : "res11: Array[(String, Int)] = Array((created,2), (files),1), (Python,1), (is,8), (collection,2))\n"
+    }, {
+      "metadata" : { },
+      "data" : {
+        "text/html" : "<div>\n      <script data-this=\"{&quot;dataId&quot;:&quot;anon70d89c23326418eff434cce214fbcfd4&quot;,&quot;dataInit&quot;:[{&quot;_1&quot;:&quot;created&quot;,&quot;_2&quot;:2},{&quot;_1&quot;:&quot;files)&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;Python&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;is&quot;,&quot;_2&quot;:8},{&quot;_1&quot;:&quot;collection&quot;,&quot;_2&quot;:2}],&quot;genId&quot;:&quot;837684418&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/req(['../javascripts/notebook/playground','../javascripts/notebook/magic/tabs'], \n      function(playground, _magictabs) {\n        // data ==> data-this (in observable.js's scopedEval) ==> this in JS => { dataId, dataInit, ... }\n        // this ==> scope (in observable.js's scopedEval) ==> this.parentElement ==> div.container below (toHtml)\n\n        playground.call(data,\n                        this\n                        ,\n                        {\n    \"f\": _magictabs,\n    \"o\": {}\n  }\n  \n                        \n                        \n                      );\n      }\n    );/*]]>*/</script>\n    <div>\n        <div>\n          <ul class=\"nav nav-tabs\" id=\"ul837684418\"><li>\n                <a href=\"#tab837684418-0\"><i class=\"fa fa-table\"/></a>\n              </li><li>\n                <a href=\"#tab837684418-1\"><i class=\"fa fa-bar-chart\"/></a>\n              </li><li>\n                <a href=\"#tab837684418-2\"><i class=\"fa fa-pie-chart\"/></a>\n              </li><li>\n                <a href=\"#tab837684418-3\"><i class=\"fa fa-cubes\"/></a>\n              </li></ul>\n\n          <div class=\"tab-content\" id=\"tab837684418\"><div class=\"tab-pane\" id=\"tab837684418-0\">\n              <div>\n      <script data-this=\"{&quot;dataId&quot;:&quot;anond251b503756c2d6b07f2a0d82ca3fca2&quot;,&quot;dataInit&quot;:[{&quot;_1&quot;:&quot;created&quot;,&quot;_2&quot;:2},{&quot;_1&quot;:&quot;files)&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;Python&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;is&quot;,&quot;_2&quot;:8},{&quot;_1&quot;:&quot;collection&quot;,&quot;_2&quot;:2}],&quot;genId&quot;:&quot;1927680550&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/req(['../javascripts/notebook/playground','../javascripts/notebook/magic/tableChart'], \n      function(playground, _magictableChart) {\n        // data ==> data-this (in observable.js's scopedEval) ==> this in JS => { dataId, dataInit, ... }\n        // this ==> scope (in observable.js's scopedEval) ==> this.parentElement ==> div.container below (toHtml)\n\n        playground.call(data,\n                        this\n                        ,\n                        {\n    \"f\": _magictableChart,\n    \"o\": {\"headers\":[\"_1\",\"_2\"],\"width\":600,\"height\":400}\n  }\n  \n                        \n                        \n                      );\n      }\n    );/*]]>*/</script>\n    <div>\n        <p data-bind=\"text: value\"><script data-this=\"{&quot;valueId&quot;:&quot;anonbf0dcb34e70da86312507980f9c307c4&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/\nreq(\n['observable', 'knockout'],\nfunction (O, ko) {\n  ko.applyBindings({\n      value: O.makeObservable(valueId)\n    },\n    this\n  );\n});\n        /*]]>*/</script></p> <span style=\"color:red\"><p data-bind=\"text: value\"><script data-this=\"{&quot;valueId&quot;:&quot;anon032be17a617717eef1b37940596d3749&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/\nreq(\n['observable', 'knockout'],\nfunction (O, ko) {\n  ko.applyBindings({\n      value: O.makeObservable(valueId)\n    },\n    this\n  );\n});\n        /*]]>*/</script></p></span>\n        <div>\n        </div>\n      </div></div>\n              </div><div class=\"tab-pane\" id=\"tab837684418-1\">\n              <div>\n      <script data-this=\"{&quot;dataId&quot;:&quot;anon2462bc7c6f00b37e2579d35a23b5eb8e&quot;,&quot;dataInit&quot;:[{&quot;_1&quot;:&quot;created&quot;,&quot;_2&quot;:2},{&quot;_1&quot;:&quot;files)&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;Python&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;is&quot;,&quot;_2&quot;:8},{&quot;_1&quot;:&quot;collection&quot;,&quot;_2&quot;:2}],&quot;genId&quot;:&quot;1628198440&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/req(['../javascripts/notebook/playground','../javascripts/notebook/magic/barChart'], \n      function(playground, _magicbarChart) {\n        // data ==> data-this (in observable.js's scopedEval) ==> this in JS => { dataId, dataInit, ... }\n        // this ==> scope (in observable.js's scopedEval) ==> this.parentElement ==> div.container below (toHtml)\n\n        playground.call(data,\n                        this\n                        ,\n                        {\n    \"f\": _magicbarChart,\n    \"o\": {\"x\":\"_1\",\"y\":\"_2\",\"width\":600,\"height\":400}\n  }\n  \n                        \n                        \n                      );\n      }\n    );/*]]>*/</script>\n    <div>\n        <p data-bind=\"text: value\"><script data-this=\"{&quot;valueId&quot;:&quot;anonfc7765cc725ae4492d9eaa92dd7295cb&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/\nreq(\n['observable', 'knockout'],\nfunction (O, ko) {\n  ko.applyBindings({\n      value: O.makeObservable(valueId)\n    },\n    this\n  );\n});\n        /*]]>*/</script></p> <span style=\"color:red\"><p data-bind=\"text: value\"><script data-this=\"{&quot;valueId&quot;:&quot;anon8a515dec4e26f66c93fee6dfde13757b&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/\nreq(\n['observable', 'knockout'],\nfunction (O, ko) {\n  ko.applyBindings({\n      value: O.makeObservable(valueId)\n    },\n    this\n  );\n});\n        /*]]>*/</script></p></span>\n        <div>\n        </div>\n      </div></div>\n              </div><div class=\"tab-pane\" id=\"tab837684418-2\">\n              <div>\n      <script data-this=\"{&quot;dataId&quot;:&quot;anon4665e42080e5351947f530853095aeb4&quot;,&quot;dataInit&quot;:[{&quot;_1&quot;:&quot;created&quot;,&quot;_2&quot;:2},{&quot;_1&quot;:&quot;files)&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;Python&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;is&quot;,&quot;_2&quot;:8},{&quot;_1&quot;:&quot;collection&quot;,&quot;_2&quot;:2}],&quot;genId&quot;:&quot;775879684&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/req(['../javascripts/notebook/playground','../javascripts/notebook/magic/pieChart'], \n      function(playground, _magicpieChart) {\n        // data ==> data-this (in observable.js's scopedEval) ==> this in JS => { dataId, dataInit, ... }\n        // this ==> scope (in observable.js's scopedEval) ==> this.parentElement ==> div.container below (toHtml)\n\n        playground.call(data,\n                        this\n                        ,\n                        {\n    \"f\": _magicpieChart,\n    \"o\": {\"series\":\"_1\",\"p\":\"_2\",\"width\":600,\"height\":400}\n  }\n  \n                        \n                        \n                      );\n      }\n    );/*]]>*/</script>\n    <div>\n        <p data-bind=\"text: value\"><script data-this=\"{&quot;valueId&quot;:&quot;anon0fae45211ea8273d633cfd3b63d3b9dd&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/\nreq(\n['observable', 'knockout'],\nfunction (O, ko) {\n  ko.applyBindings({\n      value: O.makeObservable(valueId)\n    },\n    this\n  );\n});\n        /*]]>*/</script></p> <span style=\"color:red\"><p data-bind=\"text: value\"><script data-this=\"{&quot;valueId&quot;:&quot;anon04a31f03c3736fa12b3a0b3c021a5241&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/\nreq(\n['observable', 'knockout'],\nfunction (O, ko) {\n  ko.applyBindings({\n      value: O.makeObservable(valueId)\n    },\n    this\n  );\n});\n        /*]]>*/</script></p></span>\n        <div>\n        </div>\n      </div></div>\n              </div><div class=\"tab-pane\" id=\"tab837684418-3\">\n              <div>\n      <script data-this=\"{&quot;dataId&quot;:&quot;anon4a18c3c28839476e2156ffb02880c310&quot;,&quot;dataInit&quot;:[{&quot;_1&quot;:&quot;created&quot;,&quot;_2&quot;:2},{&quot;_1&quot;:&quot;files)&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;Python&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;is&quot;,&quot;_2&quot;:8},{&quot;_1&quot;:&quot;collection&quot;,&quot;_2&quot;:2}],&quot;genId&quot;:&quot;548969984&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/req(['../javascripts/notebook/playground','../javascripts/notebook/magic/pivotChart'], \n      function(playground, _magicpivotChart) {\n        // data ==> data-this (in observable.js's scopedEval) ==> this in JS => { dataId, dataInit, ... }\n        // this ==> scope (in observable.js's scopedEval) ==> this.parentElement ==> div.container below (toHtml)\n\n        playground.call(data,\n                        this\n                        ,\n                        {\n    \"f\": _magicpivotChart,\n    \"o\": {\"width\":600,\"height\":400,\"derivedAttributes\":{},\"extraOptions\":{}}\n  }\n  \n                        \n                        \n                      );\n      }\n    );/*]]>*/</script>\n    <div>\n        <p data-bind=\"text: value\"><script data-this=\"{&quot;valueId&quot;:&quot;anond692e675542cae7f821f3fd3ef4736b0&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/\nreq(\n['observable', 'knockout'],\nfunction (O, ko) {\n  ko.applyBindings({\n      value: O.makeObservable(valueId)\n    },\n    this\n  );\n});\n        /*]]>*/</script></p> <span style=\"color:red\"><p data-bind=\"text: value\"><script data-this=\"{&quot;valueId&quot;:&quot;anon2b9d800d72234a3d4ebf40dc01b26f19&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/\nreq(\n['observable', 'knockout'],\nfunction (O, ko) {\n  ko.applyBindings({\n      value: O.makeObservable(valueId)\n    },\n    this\n  );\n});\n        /*]]>*/</script></p></span>\n        <div>\n        </div>\n      </div></div>\n              </div></div>\n        </div>\n      </div></div>"
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 7
+    } ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "45AE9513611D49DD87C56ED426C36369"
+    },
+    "cell_type" : "code",
+    "source" : "counts.saveAsTextFile(\"./data/wc.out\")",
+    "outputs" : [ {
+      "metadata" : { },
+      "data" : {
+        "text/html" : ""
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 8
+    } ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "3E116671EB094F67B9F4BEEB5042B7EC"
+    },
+    "cell_type" : "code",
+    "source" : "counts.unpersist()",
+    "outputs" : [ {
+      "name" : "stdout",
+      "output_type" : "stream",
+      "text" : "res15: counts.type = ShuffledRDD[4] at reduceByKey at <console>:55\n"
+    }, {
+      "metadata" : { },
+      "data" : {
+        "text/html" : "ShuffledRDD[4] at reduceByKey at &lt;console&gt;:55"
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 9
+    } ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "74564FF4158B412F808B1369748E8670"
+    },
+    "cell_type" : "code",
+    "source" : "",
+    "outputs" : [ ]
+  } ],
+  "nbformat" : 4
+}
