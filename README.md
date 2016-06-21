@@ -1,5 +1,7 @@
 # my spark notebooks 
 
+here are a few spark notebooks for trying out the technology. I am running the,m with docker on MAcOS
+
 how to set up (on MacOs):
 
 ## TL;DR
