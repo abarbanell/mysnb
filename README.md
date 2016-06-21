@@ -16,7 +16,7 @@ $ ./start.sh
 ## the detailed version
 
 - get Docker for Mac - get the [beta release here](https://blog.docker.com/2016/03/docker-for-mac-windows-beta/)
-- get scala notebook image (or newer version from [http://spark-notebook.io/], e.g.:
+- get scala notebook image (or newer version from http://spark-notebook.io/, e.g.:
 
 ```
 $  docker pull andypetrella/spark-notebook:0.6.3-scala-2.11.7-spark-1.6.1-hadoop-2.7.2-with-hive-with-parquet
