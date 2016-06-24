@@ -26,12 +26,23 @@
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : true,
+      "collapsed" : false,
       "id" : "B6431487C35648128A66FBDCC6E9F0E2"
     },
     "cell_type" : "code",
     "source" : "val infilepath = \"./data/wordcount.txt\"\nval outfilepath = \"./data/wordcount.out\"",
-    "outputs" : [ ]
+    "outputs" : [ {
+      "name" : "stdout",
+      "output_type" : "stream",
+      "text" : "infilepath: String = ./data/wordcount.txt\noutfilepath: String = ./data/wordcount.out\n"
+    }, {
+      "metadata" : { },
+      "data" : {
+        "text/html" : ""
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 1
+    } ]
   }, {
     "metadata" : {
       "trusted" : true,
@@ -44,14 +55,14 @@
     "outputs" : [ {
       "name" : "stdout",
       "output_type" : "stream",
-      "text" : "inputfile: org.apache.spark.rdd.RDD[String] = ./data/wordcount.txt MapPartitionsRDD[9] at textFile at <console>:53\n"
+      "text" : "inputfile: org.apache.spark.rdd.RDD[String] = ./data/wordcount.txt MapPartitionsRDD[1] at textFile at <console>:53\n"
     }, {
       "metadata" : { },
       "data" : {
         "text/html" : ""
       },
       "output_type" : "execute_result",
-      "execution_count" : 5
+      "execution_count" : 2
     } ]
   }, {
     "metadata" : {
@@ -66,14 +77,14 @@
     "outputs" : [ {
       "name" : "stdout",
       "output_type" : "stream",
-      "text" : "counts: org.apache.spark.rdd.RDD[(String, Int)] = ShuffledRDD[12] at reduceByKey at <console>:55\n"
+      "text" : "counts: org.apache.spark.rdd.RDD[(String, Int)] = ShuffledRDD[4] at reduceByKey at <console>:55\n"
     }, {
       "metadata" : { },
       "data" : {
         "text/html" : ""
       },
       "output_type" : "execute_result",
-      "execution_count" : 6
+      "execution_count" : 3
     } ]
   }, {
     "metadata" : {
@@ -87,14 +98,14 @@
     "outputs" : [ {
       "name" : "stdout",
       "output_type" : "stream",
-      "text" : "res7: String =\n(2) ShuffledRDD[12] at reduceByKey at <console>:55 []\n +-(2) MapPartitionsRDD[11] at map at <console>:55 []\n    |  MapPartitionsRDD[10] at flatMap at <console>:55 []\n    |  ./data/wordcount.txt MapPartitionsRDD[9] at textFile at <console>:53 []\n    |  ./data/wordcount.txt HadoopRDD[8] at textFile at <console>:53 []\n"
+      "text" : "res4: String =\n(2) ShuffledRDD[4] at reduceByKey at <console>:55 []\n +-(2) MapPartitionsRDD[3] at map at <console>:55 []\n    |  MapPartitionsRDD[2] at flatMap at <console>:55 []\n    |  ./data/wordcount.txt MapPartitionsRDD[1] at textFile at <console>:53 []\n    |  ./data/wordcount.txt HadoopRDD[0] at textFile at <console>:53 []\n"
     }, {
       "metadata" : { },
       "data" : {
-        "text/html" : "(2) ShuffledRDD[12] at reduceByKey at &lt;console&gt;:55 []\n +-(2) MapPartitionsRDD[11] at map at &lt;console&gt;:55 []\n    |  MapPartitionsRDD[10] at flatMap at &lt;console&gt;:55 []\n    |  ./data/wordcount.txt MapPartitionsRDD[9] at textFile at &lt;console&gt;:53 []\n    |  ./data/wordcount.txt HadoopRDD[8] at textFile at &lt;console&gt;:53 []"
+        "text/html" : "(2) ShuffledRDD[4] at reduceByKey at &lt;console&gt;:55 []\n +-(2) MapPartitionsRDD[3] at map at &lt;console&gt;:55 []\n    |  MapPartitionsRDD[2] at flatMap at &lt;console&gt;:55 []\n    |  ./data/wordcount.txt MapPartitionsRDD[1] at textFile at &lt;console&gt;:53 []\n    |  ./data/wordcount.txt HadoopRDD[0] at textFile at &lt;console&gt;:53 []"
       },
       "output_type" : "execute_result",
-      "execution_count" : 7
+      "execution_count" : 4
     } ]
   }, {
     "metadata" : {
@@ -112,14 +123,14 @@
     "outputs" : [ {
       "name" : "stdout",
       "output_type" : "stream",
-      "text" : "res9: counts.type = ShuffledRDD[12] at reduceByKey at <console>:55\n"
+      "text" : "res6: counts.type = ShuffledRDD[4] at reduceByKey at <console>:55\n"
     }, {
       "metadata" : { },
       "data" : {
-        "text/html" : "ShuffledRDD[12] at reduceByKey at &lt;console&gt;:55"
+        "text/html" : "ShuffledRDD[4] at reduceByKey at &lt;console&gt;:55"
       },
       "output_type" : "execute_result",
-      "execution_count" : 8
+      "execution_count" : 5
     } ]
   }, {
     "metadata" : {
@@ -127,7 +138,7 @@
       "input_collapsed" : false,
       "collapsed" : false,
       "presentation" : {
-        "tabs_state" : "{\n  \"tab_id\": \"#tab6603573-0\"\n}",
+        "tabs_state" : "{\n  \"tab_id\": \"#tab1100610290-0\"\n}",
         "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
       },
       "id" : "02F1DA48C2CB495B86BEE23BFFBF6203"
@@ -137,53 +148,73 @@
     "outputs" : [ {
       "name" : "stdout",
       "output_type" : "stream",
-      "text" : "res11: Array[(String, Int)] = Array((trembling,1), (scornfu,1), (field,1), (French,1), (Is,1))\n"
+      "text" : "res8: Array[(String, Int)] = Array((trembling,1), (scornfu,1), (field,1), (French,1), (Is,1))\n"
     }, {
       "metadata" : { },
       "data" : {
-        "text/html" : "<div>\n      <script data-this=\"{&quot;dataId&quot;:&quot;anon301cc2720b465f284c95f1df1a34dc90&quot;,&quot;dataInit&quot;:[{&quot;_1&quot;:&quot;trembling&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;scornfu&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;field&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;French&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;Is&quot;,&quot;_2&quot;:1}],&quot;genId&quot;:&quot;6603573&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/req(['../javascripts/notebook/playground','../javascripts/notebook/magic/tabs'], \n      function(playground, _magictabs) {\n        // data ==> data-this (in observable.js's scopedEval) ==> this in JS => { dataId, dataInit, ... }\n        // this ==> scope (in observable.js's scopedEval) ==> this.parentElement ==> div.container below (toHtml)\n\n        playground.call(data,\n                        this\n                        ,\n                        {\n    \"f\": _magictabs,\n    \"o\": {}\n  }\n  \n                        \n                        \n                      );\n      }\n    );/*]]>*/</script>\n    <div>\n        <div>\n          <ul class=\"nav nav-tabs\" id=\"ul6603573\"><li>\n                <a href=\"#tab6603573-0\"><i class=\"fa fa-table\"/></a>\n              </li><li>\n                <a href=\"#tab6603573-1\"><i class=\"fa fa-bar-chart\"/></a>\n              </li><li>\n                <a href=\"#tab6603573-2\"><i class=\"fa fa-pie-chart\"/></a>\n              </li><li>\n                <a href=\"#tab6603573-3\"><i class=\"fa fa-cubes\"/></a>\n              </li></ul>\n\n          <div class=\"tab-content\" id=\"tab6603573\"><div class=\"tab-pane\" id=\"tab6603573-0\">\n              <div>\n      <script data-this=\"{&quot;dataId&quot;:&quot;anonc0ae0e020921fa32caf4a1a7c247f2c0&quot;,&quot;dataInit&quot;:[{&quot;_1&quot;:&quot;trembling&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;scornfu&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;field&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;French&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;Is&quot;,&quot;_2&quot;:1}],&quot;genId&quot;:&quot;1818691871&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/req(['../javascripts/notebook/playground','../javascripts/notebook/magic/tableChart'], \n      function(playground, _magictableChart) {\n        // data ==> data-this (in observable.js's scopedEval) ==> this in JS => { dataId, dataInit, ... }\n        // this ==> scope (in observable.js's scopedEval) ==> this.parentElement ==> div.container below (toHtml)\n\n        playground.call(data,\n                        this\n                        ,\n                        {\n    \"f\": _magictableChart,\n    \"o\": {\"headers\":[\"_1\",\"_2\"],\"width\":600,\"height\":400}\n  }\n  \n                        \n                        \n                      );\n      }\n    );/*]]>*/</script>\n    <div>\n        <p data-bind=\"text: value\"><script data-this=\"{&quot;valueId&quot;:&quot;anon48a2ec5738092ea955e203cb6731d9e4&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/\nreq(\n['observable', 'knockout'],\nfunction (O, ko) {\n  ko.applyBindings({\n      value: O.makeObservable(valueId)\n    },\n    this\n  );\n});\n        /*]]>*/</script></p> <span style=\"color:red\"><p data-bind=\"text: value\"><script data-this=\"{&quot;valueId&quot;:&quot;anona43829be3442ae0d8badf678029ff516&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/\nreq(\n['observable', 'knockout'],\nfunction (O, ko) {\n  ko.applyBindings({\n      value: O.makeObservable(valueId)\n    },\n    this\n  );\n});\n        /*]]>*/</script></p></span>\n        <div>\n        </div>\n      </div></div>\n              </div><div class=\"tab-pane\" id=\"tab6603573-1\">\n              <div>\n      <script data-this=\"{&quot;dataId&quot;:&quot;anon94c01998f82247709c939be9ad1583bf&quot;,&quot;dataInit&quot;:[{&quot;_1&quot;:&quot;trembling&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;scornfu&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;field&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;French&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;Is&quot;,&quot;_2&quot;:1}],&quot;genId&quot;:&quot;1007532997&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/req(['../javascripts/notebook/playground','../javascripts/notebook/magic/barChart'], \n      function(playground, _magicbarChart) {\n        // data ==> data-this (in observable.js's scopedEval) ==> this in JS => { dataId, dataInit, ... }\n        // this ==> scope (in observable.js's scopedEval) ==> this.parentElement ==> div.container below (toHtml)\n\n        playground.call(data,\n                        this\n                        ,\n                        {\n    \"f\": _magicbarChart,\n    \"o\": {\"x\":\"_1\",\"y\":\"_2\",\"width\":600,\"height\":400}\n  }\n  \n                        \n                        \n                      );\n      }\n    );/*]]>*/</script>\n    <div>\n        <p data-bind=\"text: value\"><script data-this=\"{&quot;valueId&quot;:&quot;anon8865104a5feb6aa4a63049ce2d9299aa&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/\nreq(\n['observable', 'knockout'],\nfunction (O, ko) {\n  ko.applyBindings({\n      value: O.makeObservable(valueId)\n    },\n    this\n  );\n});\n        /*]]>*/</script></p> <span style=\"color:red\"><p data-bind=\"text: value\"><script data-this=\"{&quot;valueId&quot;:&quot;anon42fe7a733b021ac3d8e7bde17ebe8ee7&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/\nreq(\n['observable', 'knockout'],\nfunction (O, ko) {\n  ko.applyBindings({\n      value: O.makeObservable(valueId)\n    },\n    this\n  );\n});\n        /*]]>*/</script></p></span>\n        <div>\n        </div>\n      </div></div>\n              </div><div class=\"tab-pane\" id=\"tab6603573-2\">\n              <div>\n      <script data-this=\"{&quot;dataId&quot;:&quot;anon2ecc990457e175fcd32fc2d7f1164cdd&quot;,&quot;dataInit&quot;:[{&quot;_1&quot;:&quot;trembling&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;scornfu&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;field&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;French&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;Is&quot;,&quot;_2&quot;:1}],&quot;genId&quot;:&quot;780123863&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/req(['../javascripts/notebook/playground','../javascripts/notebook/magic/pieChart'], \n      function(playground, _magicpieChart) {\n        // data ==> data-this (in observable.js's scopedEval) ==> this in JS => { dataId, dataInit, ... }\n        // this ==> scope (in observable.js's scopedEval) ==> this.parentElement ==> div.container below (toHtml)\n\n        playground.call(data,\n                        this\n                        ,\n                        {\n    \"f\": _magicpieChart,\n    \"o\": {\"series\":\"_1\",\"p\":\"_2\",\"width\":600,\"height\":400}\n  }\n  \n                        \n                        \n                      );\n      }\n    );/*]]>*/</script>\n    <div>\n        <p data-bind=\"text: value\"><script data-this=\"{&quot;valueId&quot;:&quot;anonc74e943e1fe9732165e6f1bb2e24f07a&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/\nreq(\n['observable', 'knockout'],\nfunction (O, ko) {\n  ko.applyBindings({\n      value: O.makeObservable(valueId)\n    },\n    this\n  );\n});\n        /*]]>*/</script></p> <span style=\"color:red\"><p data-bind=\"text: value\"><script data-this=\"{&quot;valueId&quot;:&quot;anon98001a865387a161282e1c164753e956&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/\nreq(\n['observable', 'knockout'],\nfunction (O, ko) {\n  ko.applyBindings({\n      value: O.makeObservable(valueId)\n    },\n    this\n  );\n});\n        /*]]>*/</script></p></span>\n        <div>\n        </div>\n      </div></div>\n              </div><div class=\"tab-pane\" id=\"tab6603573-3\">\n              <div>\n      <script data-this=\"{&quot;dataId&quot;:&quot;anon8b9564439b9f61a06630cc22b8a976b1&quot;,&quot;dataInit&quot;:[{&quot;_1&quot;:&quot;trembling&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;scornfu&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;field&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;French&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;Is&quot;,&quot;_2&quot;:1}],&quot;genId&quot;:&quot;1702531635&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/req(['../javascripts/notebook/playground','../javascripts/notebook/magic/pivotChart'], \n      function(playground, _magicpivotChart) {\n        // data ==> data-this (in observable.js's scopedEval) ==> this in JS => { dataId, dataInit, ... }\n        // this ==> scope (in observable.js's scopedEval) ==> this.parentElement ==> div.container below (toHtml)\n\n        playground.call(data,\n                        this\n                        ,\n                        {\n    \"f\": _magicpivotChart,\n    \"o\": {\"width\":600,\"height\":400,\"derivedAttributes\":{},\"extraOptions\":{}}\n  }\n  \n                        \n                        \n                      );\n      }\n    );/*]]>*/</script>\n    <div>\n        <p data-bind=\"text: value\"><script data-this=\"{&quot;valueId&quot;:&quot;anon9f87c6c54ecae8648c07a9028305b2a0&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/\nreq(\n['observable', 'knockout'],\nfunction (O, ko) {\n  ko.applyBindings({\n      value: O.makeObservable(valueId)\n    },\n    this\n  );\n});\n        /*]]>*/</script></p> <span style=\"color:red\"><p data-bind=\"text: value\"><script data-this=\"{&quot;valueId&quot;:&quot;anond5d94f52fdc5e392d02f0fbb845e906a&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/\nreq(\n['observable', 'knockout'],\nfunction (O, ko) {\n  ko.applyBindings({\n      value: O.makeObservable(valueId)\n    },\n    this\n  );\n});\n        /*]]>*/</script></p></span>\n        <div>\n        </div>\n      </div></div>\n              </div></div>\n        </div>\n      </div></div>"
+        "text/html" : "<div>\n      <script data-this=\"{&quot;dataId&quot;:&quot;anonf5d19eca22d06be298305155c87fd2e8&quot;,&quot;dataInit&quot;:[{&quot;_1&quot;:&quot;trembling&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;scornfu&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;field&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;French&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;Is&quot;,&quot;_2&quot;:1}],&quot;genId&quot;:&quot;1100610290&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/req(['../javascripts/notebook/playground','../javascripts/notebook/magic/tabs'], \n      function(playground, _magictabs) {\n        // data ==> data-this (in observable.js's scopedEval) ==> this in JS => { dataId, dataInit, ... }\n        // this ==> scope (in observable.js's scopedEval) ==> this.parentElement ==> div.container below (toHtml)\n\n        playground.call(data,\n                        this\n                        ,\n                        {\n    \"f\": _magictabs,\n    \"o\": {}\n  }\n  \n                        \n                        \n                      );\n      }\n    );/*]]>*/</script>\n    <div>\n        <div>\n          <ul class=\"nav nav-tabs\" id=\"ul1100610290\"><li>\n                <a href=\"#tab1100610290-0\"><i class=\"fa fa-table\"/></a>\n              </li><li>\n                <a href=\"#tab1100610290-1\"><i class=\"fa fa-bar-chart\"/></a>\n              </li><li>\n                <a href=\"#tab1100610290-2\"><i class=\"fa fa-pie-chart\"/></a>\n              </li><li>\n                <a href=\"#tab1100610290-3\"><i class=\"fa fa-cubes\"/></a>\n              </li></ul>\n\n          <div class=\"tab-content\" id=\"tab1100610290\"><div class=\"tab-pane\" id=\"tab1100610290-0\">\n              <div>\n      <script data-this=\"{&quot;dataId&quot;:&quot;anon19481e8735120635a6890bd510fe3f6d&quot;,&quot;dataInit&quot;:[{&quot;_1&quot;:&quot;trembling&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;scornfu&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;field&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;French&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;Is&quot;,&quot;_2&quot;:1}],&quot;genId&quot;:&quot;1005953960&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/req(['../javascripts/notebook/playground','../javascripts/notebook/magic/tableChart'], \n      function(playground, _magictableChart) {\n        // data ==> data-this (in observable.js's scopedEval) ==> this in JS => { dataId, dataInit, ... }\n        // this ==> scope (in observable.js's scopedEval) ==> this.parentElement ==> div.container below (toHtml)\n\n        playground.call(data,\n                        this\n                        ,\n                        {\n    \"f\": _magictableChart,\n    \"o\": {\"headers\":[\"_1\",\"_2\"],\"width\":600,\"height\":400}\n  }\n  \n                        \n                        \n                      );\n      }\n    );/*]]>*/</script>\n    <div>\n        <p data-bind=\"text: value\"><script data-this=\"{&quot;valueId&quot;:&quot;anon5f5a2568baad88e4aaee87b29933b98e&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/\nreq(\n['observable', 'knockout'],\nfunction (O, ko) {\n  ko.applyBindings({\n      value: O.makeObservable(valueId)\n    },\n    this\n  );\n});\n        /*]]>*/</script></p> <span style=\"color:red\"><p data-bind=\"text: value\"><script data-this=\"{&quot;valueId&quot;:&quot;anona70a68f547d26316105a80eb6e979c8a&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/\nreq(\n['observable', 'knockout'],\nfunction (O, ko) {\n  ko.applyBindings({\n      value: O.makeObservable(valueId)\n    },\n    this\n  );\n});\n        /*]]>*/</script></p></span>\n        <div>\n        </div>\n      </div></div>\n              </div><div class=\"tab-pane\" id=\"tab1100610290-1\">\n              <div>\n      <script data-this=\"{&quot;dataId&quot;:&quot;anon937fe1a6ae7c7b8c3453bab82350cf06&quot;,&quot;dataInit&quot;:[{&quot;_1&quot;:&quot;trembling&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;scornfu&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;field&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;French&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;Is&quot;,&quot;_2&quot;:1}],&quot;genId&quot;:&quot;877082561&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/req(['../javascripts/notebook/playground','../javascripts/notebook/magic/barChart'], \n      function(playground, _magicbarChart) {\n        // data ==> data-this (in observable.js's scopedEval) ==> this in JS => { dataId, dataInit, ... }\n        // this ==> scope (in observable.js's scopedEval) ==> this.parentElement ==> div.container below (toHtml)\n\n        playground.call(data,\n                        this\n                        ,\n                        {\n    \"f\": _magicbarChart,\n    \"o\": {\"x\":\"_1\",\"y\":\"_2\",\"width\":600,\"height\":400}\n  }\n  \n                        \n                        \n                      );\n      }\n    );/*]]>*/</script>\n    <div>\n        <p data-bind=\"text: value\"><script data-this=\"{&quot;valueId&quot;:&quot;anonf590fc21a6e87a3103bf4298a1f6b245&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/\nreq(\n['observable', 'knockout'],\nfunction (O, ko) {\n  ko.applyBindings({\n      value: O.makeObservable(valueId)\n    },\n    this\n  );\n});\n        /*]]>*/</script></p> <span style=\"color:red\"><p data-bind=\"text: value\"><script data-this=\"{&quot;valueId&quot;:&quot;anon1de1c69bbf0b51f3ac8da321c7335d4b&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/\nreq(\n['observable', 'knockout'],\nfunction (O, ko) {\n  ko.applyBindings({\n      value: O.makeObservable(valueId)\n    },\n    this\n  );\n});\n        /*]]>*/</script></p></span>\n        <div>\n        </div>\n      </div></div>\n              </div><div class=\"tab-pane\" id=\"tab1100610290-2\">\n              <div>\n      <script data-this=\"{&quot;dataId&quot;:&quot;anon0a6716b8dc2fd8b7ba2dec66d11ebc7f&quot;,&quot;dataInit&quot;:[{&quot;_1&quot;:&quot;trembling&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;scornfu&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;field&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;French&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;Is&quot;,&quot;_2&quot;:1}],&quot;genId&quot;:&quot;33579306&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/req(['../javascripts/notebook/playground','../javascripts/notebook/magic/pieChart'], \n      function(playground, _magicpieChart) {\n        // data ==> data-this (in observable.js's scopedEval) ==> this in JS => { dataId, dataInit, ... }\n        // this ==> scope (in observable.js's scopedEval) ==> this.parentElement ==> div.container below (toHtml)\n\n        playground.call(data,\n                        this\n                        ,\n                        {\n    \"f\": _magicpieChart,\n    \"o\": {\"series\":\"_1\",\"p\":\"_2\",\"width\":600,\"height\":400}\n  }\n  \n                        \n                        \n                      );\n      }\n    );/*]]>*/</script>\n    <div>\n        <p data-bind=\"text: value\"><script data-this=\"{&quot;valueId&quot;:&quot;anonbfcb5655e6064601222d5046a52cf274&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/\nreq(\n['observable', 'knockout'],\nfunction (O, ko) {\n  ko.applyBindings({\n      value: O.makeObservable(valueId)\n    },\n    this\n  );\n});\n        /*]]>*/</script></p> <span style=\"color:red\"><p data-bind=\"text: value\"><script data-this=\"{&quot;valueId&quot;:&quot;anon343c20403293abb3c59dc8ba70de1bc4&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/\nreq(\n['observable', 'knockout'],\nfunction (O, ko) {\n  ko.applyBindings({\n      value: O.makeObservable(valueId)\n    },\n    this\n  );\n});\n        /*]]>*/</script></p></span>\n        <div>\n        </div>\n      </div></div>\n              </div><div class=\"tab-pane\" id=\"tab1100610290-3\">\n              <div>\n      <script data-this=\"{&quot;dataId&quot;:&quot;anone23a27ca6dbf6db15a1b3effebba0de1&quot;,&quot;dataInit&quot;:[{&quot;_1&quot;:&quot;trembling&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;scornfu&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;field&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;French&quot;,&quot;_2&quot;:1},{&quot;_1&quot;:&quot;Is&quot;,&quot;_2&quot;:1}],&quot;genId&quot;:&quot;616287994&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/req(['../javascripts/notebook/playground','../javascripts/notebook/magic/pivotChart'], \n      function(playground, _magicpivotChart) {\n        // data ==> data-this (in observable.js's scopedEval) ==> this in JS => { dataId, dataInit, ... }\n        // this ==> scope (in observable.js's scopedEval) ==> this.parentElement ==> div.container below (toHtml)\n\n        playground.call(data,\n                        this\n                        ,\n                        {\n    \"f\": _magicpivotChart,\n    \"o\": {\"width\":600,\"height\":400,\"derivedAttributes\":{},\"extraOptions\":{}}\n  }\n  \n                        \n                        \n                      );\n      }\n    );/*]]>*/</script>\n    <div>\n        <p data-bind=\"text: value\"><script data-this=\"{&quot;valueId&quot;:&quot;anon664bb6cb0d5321de7ec8f06d7495dd70&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/\nreq(\n['observable', 'knockout'],\nfunction (O, ko) {\n  ko.applyBindings({\n      value: O.makeObservable(valueId)\n    },\n    this\n  );\n});\n        /*]]>*/</script></p> <span style=\"color:red\"><p data-bind=\"text: value\"><script data-this=\"{&quot;valueId&quot;:&quot;anon0a152b2b7e5c1545d227fb74a0ffd825&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/\nreq(\n['observable', 'knockout'],\nfunction (O, ko) {\n  ko.applyBindings({\n      value: O.makeObservable(valueId)\n    },\n    this\n  );\n});\n        /*]]>*/</script></p></span>\n        <div>\n        </div>\n      </div></div>\n              </div></div>\n        </div>\n      </div></div>"
       },
       "output_type" : "execute_result",
-      "execution_count" : 9
+      "execution_count" : 6
     } ]
   }, {
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
       "collapsed" : false,
-      "id" : "245027D5FACA4483806ACBDE87A5AD77"
+      "id" : "EA3E43D970524C68855A15EC34047B95"
     },
     "cell_type" : "code",
-    "source" : "val outfilepath = \"./data/wc.out\"",
+    "source" : "val hadoopConf = new org.apache.hadoop.conf.Configuration()",
     "outputs" : [ {
       "name" : "stdout",
       "output_type" : "stream",
-      "text" : "filepath: String = ./data/wc.out\n"
+      "text" : "hadoopConf: org.apache.hadoop.conf.Configuration = Configuration: core-default.xml, core-site.xml, mapred-default.xml, mapred-site.xml, yarn-default.xml, yarn-site.xml, hdfs-default.xml, hdfs-site.xml\n"
     }, {
       "metadata" : { },
       "data" : {
         "text/html" : ""
       },
       "output_type" : "execute_result",
-      "execution_count" : 10
+      "execution_count" : 12
     } ]
   }, {
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
       "collapsed" : false,
-      "id" : "21B82F2F398249FF8AADC58E4334C911"
+      "id" : "EC56746F02F34E408375F64356658C75"
     },
     "cell_type" : "code",
-    "source" : "",
+    "source" : "val hdfs = org.apache.hadoop.fs.FileSystem.get(new java.net.URI(\"hdfs://localhost:9000\"), hadoopConf)",
     "outputs" : [ {
+      "name" : "stdout",
+      "output_type" : "stream",
+      "text" : "hdfs: org.apache.hadoop.fs.FileSystem = DFS[DFSClient[clientName=DFSClient_NONMAPREDUCE_-1466274166_10, ugi=root (auth:SIMPLE)]]\n"
+    }, {
       "metadata" : { },
       "data" : {
         "text/html" : ""
       },
       "output_type" : "execute_result",
-      "execution_count" : 11
+      "execution_count" : 13
     } ]
+  }, {
+    "metadata" : {
+      "id" : "33729E0EC840403795B62A882799BB9B"
+    },
+    "cell_type" : "markdown",
+    "source" : "## hdfs operations\nwe have a hdfs object now, lets try to \n- create files\n- write files \n- list files\n- delete files\n- handle errors on some operations"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "E8A6452AC19A4B948BFE6510DE93AD22"
+    },
+    "cell_type" : "code",
+    "source" : "",
+    "outputs" : [ ]
   }, {
     "metadata" : {
       "trusted" : true,
@@ -192,18 +223,11 @@
       "id" : "DAA55091AF5945BD85417A872F1FB925"
     },
     "cell_type" : "code",
-    "source" : "val hadoopConf = new org.apache.hadoop.conf.Configuration()\nval hdfs = org.apache.hadoop.fs.FileSystem.get(new java.net.URI(\"hdfs://localhost:9000\"), hadoopConf)\ntry { hdfs.delete(new org.apache.hadoop.fs.Path(filepath), true) } catch { case _ : Throwable => { } }",
+    "source" : "// try { \n  hdfs.delete(new org.apache.hadoop.fs.Path(outfilepath), true) \n// } catch { \n  //case _ : Throwable => { } \n// }",
     "outputs" : [ {
       "name" : "stdout",
       "output_type" : "stream",
-      "text" : "hadoopConf: org.apache.hadoop.conf.Configuration = Configuration: core-default.xml, core-site.xml, mapred-default.xml, mapred-site.xml, yarn-default.xml, yarn-site.xml, hdfs-default.xml, hdfs-site.xml\nhdfs: org.apache.hadoop.fs.FileSystem = DFS[DFSClient[clientName=DFSClient_NONMAPREDUCE_-1547873070_9, ugi=root (auth:SIMPLE)]]\nres16: AnyVal = ()\n"
-    }, {
-      "metadata" : { },
-      "data" : {
-        "text/html" : ""
-      },
-      "output_type" : "execute_result",
-      "execution_count" : 12
+      "text" : "java.io.EOFException: End of File Exception between local host is: \"3cef9b82d122/172.17.0.2\"; destination host is: \"localhost\":9000; : java.io.EOFException; For more details see:  http://wiki.apache.org/hadoop/EOFException\n  at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)\n  at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)\n  at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)\n  at java.lang.reflect.Constructor.newInstance(Constructor.java:526)\n  at org.apache.hadoop.net.NetUtils.wrapWithMessage(NetUtils.java:792)\n  at org.apache.hadoop.net.NetUtils.wrapException(NetUtils.java:765)\n  at org.apache.hadoop.ipc.Client.call(Client.java:1479)\n  at org.apache.hadoop.ipc.Client.call(Client.java:1412)\n  at org.apache.hadoop.ipc.ProtobufRpcEngine$Invoker.invoke(ProtobufRpcEngine.java:229)\n  at com.sun.proxy.$Proxy20.delete(Unknown Source)\n  at org.apache.hadoop.hdfs.protocolPB.ClientNamenodeProtocolTranslatorPB.delete(ClientNamenodeProtocolTranslatorPB.java:540)\n  at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n  at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)\n  at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n  at java.lang.reflect.Method.invoke(Method.java:606)\n  at org.apache.hadoop.io.retry.RetryInvocationHandler.invokeMethod(RetryInvocationHandler.java:191)\n  at org.apache.hadoop.io.retry.RetryInvocationHandler.invoke(RetryInvocationHandler.java:102)\n  at com.sun.proxy.$Proxy21.delete(Unknown Source)\n  at org.apache.hadoop.hdfs.DFSClient.delete(DFSClient.java:2044)\n  at org.apache.hadoop.hdfs.DistributedFileSystem$14.doCall(DistributedFileSystem.java:707)\n  at org.apache.hadoop.hdfs.DistributedFileSystem$14.doCall(DistributedFileSystem.java:703)\n  at org.apache.hadoop.fs.FileSystemLinkResolver.resolve(FileSystemLinkResolver.java:81)\n  at org.apache.hadoop.hdfs.DistributedFileSystem.delete(DistributedFileSystem.java:714)\n  ... 55 elided\nCaused by: java.io.EOFException\n  at java.io.DataInputStream.readInt(DataInputStream.java:392)\n  at org.apache.hadoop.ipc.Client$Connection.receiveRpcResponse(Client.java:1084)\n  at org.apache.hadoop.ipc.Client$Connection.run(Client.java:979)\n"
     } ]
   }, {
     "metadata" : {
