@@ -15,6 +15,6 @@ main:
   - title: "Collections"
     url: /collection-archive/
 
-	- title: "Main Blog"
-		url: http://blog.abarbanell.de
+  - title: "Main Blog"
+    url: http://blog.abarbanell.de
 
