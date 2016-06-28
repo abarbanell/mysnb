@@ -21,7 +21,7 @@
       "id" : "03042A27CF584B08949726469C7A7575"
     },
     "cell_type" : "markdown",
-    "source" : "# HDFS operations\ntry to do some general hdfs operations out of scala notebook\n\nFirst, let's define a filename and get a handle on the hdfs filesystem\n"
+    "source" : "# HDFS operations\ntry to do some general hdfs operations out of scala notebook\n\nWe are using latest stable hadoop (currently 2.7.2) here and use the documentation from https://hadoop.apache.org/docs/stable/api/\n\n\nFirst, let's define a filename and get a handle on the hdfs filesystem\n"
   }, {
     "metadata" : {
       "trusted" : true,
@@ -30,18 +30,18 @@
       "id" : "DA8A4F1D22C14D1AA4914CCE994C2052"
     },
     "cell_type" : "code",
-    "source" : "val infilepath = \"./data/newfile\"",
+    "source" : "val infilepath = \"/opt/docker/data/newfile\"",
     "outputs" : [ {
       "name" : "stdout",
       "output_type" : "stream",
-      "text" : "infilepath: String = ./data/newfile\n"
+      "text" : "infilepath: String = /opt/docker/data/newfile\n"
     }, {
       "metadata" : { },
       "data" : {
         "text/html" : ""
       },
       "output_type" : "execute_result",
-      "execution_count" : 4
+      "execution_count" : 21
     } ]
   }, {
     "metadata" : {
@@ -51,7 +51,7 @@
       "id" : "2621CFBC5685443889CF2A0DD5798193"
     },
     "cell_type" : "code",
-    "source" : "val hadoopConf = new org.apache.hadoop.conf.Configuration()",
+    "source" : "val hadoopConf = sc.hadoopConfiguration",
     "outputs" : [ {
       "name" : "stdout",
       "output_type" : "stream",
@@ -62,8 +62,14 @@
         "text/html" : ""
       },
       "output_type" : "execute_result",
-      "execution_count" : 5
+      "execution_count" : 23
     } ]
+  }, {
+    "metadata" : {
+      "id" : "F7F2E35705DE4D619EEF92626AE43B8F"
+    },
+    "cell_type" : "markdown",
+    "source" : "here, we get the filesystem based on the hadoop conf object - in a spark notebook this is initially a local filesyste\n"
   }, {
     "metadata" : {
       "trusted" : true,
@@ -72,18 +78,18 @@
       "id" : "3BD411057DD24EDBA04A962A19FD56D6"
     },
     "cell_type" : "code",
-    "source" : "val hdfs = org.apache.hadoop.fs.FileSystem.get(new java.net.URI(\"hdfs://localhost:9000\"), hadoopConf)",
+    "source" : "val hdfs = org.apache.hadoop.fs.FileSystem.get(hadoopConf)",
     "outputs" : [ {
       "name" : "stdout",
       "output_type" : "stream",
-      "text" : "hdfs: org.apache.hadoop.fs.FileSystem = DFS[DFSClient[clientName=DFSClient_NONMAPREDUCE_-1885435514_11, ugi=root (auth:SIMPLE)]]\n"
+      "text" : "hdfs: org.apache.hadoop.fs.FileSystem = org.apache.hadoop.fs.LocalFileSystem@422f5e62\n"
     }, {
       "metadata" : { },
       "data" : {
         "text/html" : ""
       },
       "output_type" : "execute_result",
-      "execution_count" : 6
+      "execution_count" : 33
     } ]
   }, {
     "metadata" : {
@@ -99,95 +105,18 @@
       "id" : "B262759B5C134CE3A15198557DC52107"
     },
     "cell_type" : "code",
-    "source" : "val dataPath = new org.apache.hadoop.fs.Path(\"/data\")",
+    "source" : "val dataPath = new org.apache.hadoop.fs.Path(\"./data\")",
     "outputs" : [ {
       "name" : "stdout",
       "output_type" : "stream",
-      "text" : "dataPath: org.apache.hadoop.fs.Path = /data\n"
+      "text" : "dataPath: org.apache.hadoop.fs.Path = /opt/docker/data\n"
     }, {
       "metadata" : { },
       "data" : {
         "text/html" : ""
       },
       "output_type" : "execute_result",
-      "execution_count" : 7
-    } ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "3CD6368941764A159ED929787476F843"
-    },
-    "cell_type" : "code",
-    "source" : "hdfs.getUri()",
-    "outputs" : [ {
-      "name" : "stdout",
-      "output_type" : "stream",
-      "text" : "res22: java.net.URI = hdfs://localhost:9000\n"
-    }, {
-      "metadata" : { },
-      "data" : {
-        "text/html" : "hdfs://localhost:9000"
-      },
-      "output_type" : "execute_result",
-      "execution_count" : 15
-    } ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "1D2AF68B2C86429BA9FF03420196472E"
-    },
-    "cell_type" : "code",
-    "source" : "hdfs.printStatistics()",
-    "outputs" : [ {
-      "name" : "stdout",
-      "output_type" : "stream",
-      "text" : "<console>:59: error: value printStatistics is not a member of org.apache.hadoop.fs.FileSystem\n       hdfs.printStatistics()\n            ^\n"
-    } ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "97D530C2DDA94A768D39E4300A19B750"
-    },
-    "cell_type" : "code",
-    "source" : "hdfs",
-    "outputs" : [ {
-      "name" : "stdout",
-      "output_type" : "stream",
-      "text" : "res26: org.apache.hadoop.fs.FileSystem = DFS[DFSClient[clientName=DFSClient_NONMAPREDUCE_-1885435514_11, ugi=root (auth:SIMPLE)]]\n"
-    }, {
-      "metadata" : { },
-      "data" : {
-        "text/html" : "DFS[DFSClient[clientName=DFSClient_NONMAPREDUCE_-1885435514_11, ugi=root (auth:SIMPLE)]]"
-      },
-      "output_type" : "execute_result",
-      "execution_count" : 17
-    } ]
-  }, {
-    "metadata" : {
-      "trusted" : true,
-      "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "F8FA898277AF44F580EA57A6512FA797"
-    },
-    "cell_type" : "code",
-    "source" : "hdfs.getHomeDirectory()",
-    "outputs" : [ {
-      "name" : "stdout",
-      "output_type" : "stream",
-      "text" : "res30: org.apache.hadoop.fs.Path = hdfs://localhost:9000/user/root\n"
-    }, {
-      "metadata" : { },
-      "data" : {
-        "text/html" : "hdfs://localhost:9000/user/root"
-      },
-      "output_type" : "execute_result",
-      "execution_count" : 19
+      "execution_count" : 26
     } ]
   }, {
     "metadata" : {
@@ -197,14 +126,18 @@
       "id" : "9E23A70488414C998E635F2BCE64404A"
     },
     "cell_type" : "code",
-    "source" : "// access error - probably permission or network address wrong? \n// hdfs.listFiles(dataPath, false)",
+    "source" : "// get an iterator on the files\nhdfs.listFiles(dataPath, false)",
     "outputs" : [ {
+      "name" : "stdout",
+      "output_type" : "stream",
+      "text" : "res52: org.apache.hadoop.fs.RemoteIterator[org.apache.hadoop.fs.LocatedFileStatus] = org.apache.hadoop.fs.FileSystem$6@5a49adc1\n"
+    }, {
       "metadata" : { },
       "data" : {
-        "text/html" : ""
+        "text/html" : "org.apache.hadoop.fs.FileSystem$6@5a49adc1"
       },
       "output_type" : "execute_result",
-      "execution_count" : 21
+      "execution_count" : 34
     } ]
   }, {
     "metadata" : {
