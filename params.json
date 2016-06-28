@@ -1,6 +1,0 @@
-{
-  "name": "Mysnb",
-  "tagline": "my spark notebooks",
-  "body": "### Overview\r\nThis is a collection of spark notebooks for my own use. You may find it useful as well, but I give no warranty whatsoever. I have used these notebooks on MacOS with the new Mac Docker engine (still beta). Highly experimental.\r\n\r\n### Authors and Contributors\r\nTobias Abarbanell (@abarbanell) \r\n\r\n### Support or Contact\r\nI have tried to add explanations in the notebooks and the readme of the master branch. Beyond that - may the source be with you.\r\n",
-  "note": "Don't delete this file! It's used internally to help with page regeneration."
-}
