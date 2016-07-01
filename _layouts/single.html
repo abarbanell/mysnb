@@ -55,6 +55,10 @@ layout: default
       {% include post_pagination.html %}
     </div>
 
+		{% if site.google_ad_client and site.google_ad_slot %} 
+			{% include adsense.html %} 
+    {% endif %}
+		
     {% if site.comments.provider and page.comments %}
       {% include comments.html %}
     {% endif %}
