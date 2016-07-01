@@ -56,6 +56,12 @@ layout: default
     </div>
 
 		{% if site.google_ad_client and site.google_ad_slot %} 
+			<!-- include adsense with site --> 
+			{% include adsense.html %} 
+    {% endif %}
+		
+		{% if page.google_ad_client and page.google_ad_slot %} 
+			<!-- include adsense with page --> 
 			{% include adsense.html %} 
     {% endif %}
 		
