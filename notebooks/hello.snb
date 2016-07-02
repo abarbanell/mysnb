@@ -21,7 +21,7 @@
       "id" : "DDC30A20A25145AE88616A7D66743FA0"
     },
     "cell_type" : "markdown",
-    "source" : "# Hello world in spark notebook"
+    "source" : "# Hello world in spark notebook\nThere is actually no spark magic in this notebook, just a way to say hello from scala...\n"
   }, {
     "metadata" : {
       "trusted" : true,
@@ -90,24 +90,17 @@
       "id" : "B7CB490BE6E44B9898F95C57170C48C6"
     },
     "cell_type" : "markdown",
-    "source" : "done. that was easy. Now lets see whether we can save it."
+    "source" : "done. that was easy.\n"
   }, {
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
-      "collapsed" : false,
-      "id" : "667C712EBC8E466F9107AC091224379B"
+      "collapsed" : true,
+      "id" : "249AD98084AF4188B9D289F556BF2166"
     },
     "cell_type" : "code",
     "source" : "",
-    "outputs" : [ {
-      "metadata" : { },
-      "data" : {
-        "text/html" : ""
-      },
-      "output_type" : "execute_result",
-      "execution_count" : 4
-    } ]
+    "outputs" : [ ]
   } ],
   "nbformat" : 4
 }
