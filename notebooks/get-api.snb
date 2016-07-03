@@ -1,0 +1,37 @@
+{
+  "metadata" : {
+    "name" : "get-api",
+    "user_save_timestamp" : "1970-01-01T00:00:00.000Z",
+    "auto_save_timestamp" : "1970-01-01T00:00:00.000Z",
+    "language_info" : {
+      "name" : "scala",
+      "file_extension" : "scala",
+      "codemirror_mode" : "text/x-scala"
+    },
+    "trusted" : true,
+    "customLocalRepo" : null,
+    "customRepos" : null,
+    "customDeps" : null,
+    "customImports" : null,
+    "customArgs" : null,
+    "customSparkConf" : null
+  },
+  "cells" : [ {
+    "metadata" : {
+      "id" : "EA63F1CF3E7D4FE4ADEEDD270244FDC0"
+    },
+    "cell_type" : "markdown",
+    "source" : "# get data via API\n\nwe want to get some data into text files from external sources, e.g.\n\n- text of all shapespeare poems in individual text files \n- text of burns poems in individual files\n\nlater we want to separate this into a training and test set to build a text classifier.\n\nSources: \n\n- project gutenberg? But do they have an XML or JSON which allows to separate the real text from the metadata? R-code is described at http://www.r-bloggers.com/text-mining-the-complete-works-of-william-shakespeare/\n\n\n````\n\n> TEXTFILE = \"data/pg100.txt\"\n> if (!file.exists(TEXTFILE)) {\n+     download.file(\"http://www.gutenberg.org/cache/epub/100/pg100.txt\", destfile = TEXTFILE)\n+ }\n> shakespeare = readLines(TEXTFILE)\n> length(shakespeare)\n[1] 124787\n````\n\n"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "3377F16A109E412E979A2FA263201A25"
+    },
+    "cell_type" : "code",
+    "source" : "",
+    "outputs" : [ ]
+  } ],
+  "nbformat" : 4
+}
