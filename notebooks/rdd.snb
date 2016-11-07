@@ -41,7 +41,8 @@
         "text/html" : ""
       },
       "output_type" : "execute_result",
-      "execution_count" : 1
+      "execution_count" : 1,
+      "time" : "Took: 2 seconds 76 milliseconds, at 2016-11-3 11:23"
     } ]
   }, {
     "metadata" : {
@@ -55,14 +56,15 @@
     "outputs" : [ {
       "name" : "stdout",
       "output_type" : "stream",
-      "text" : "inputfile: org.apache.spark.rdd.RDD[String] = ./data/to-a-mouse.txt MapPartitionsRDD[1] at textFile at <console>:55\n"
+      "text" : "inputfile: org.apache.spark.rdd.RDD[String] = ./data/to-a-mouse.txt MapPartitionsRDD[1] at textFile at <console>:69\n"
     }, {
       "metadata" : { },
       "data" : {
         "text/html" : ""
       },
       "output_type" : "execute_result",
-      "execution_count" : 2
+      "execution_count" : 2,
+      "time" : "Took: 2 seconds 883 milliseconds, at 2016-11-3 11:23"
     } ]
   }, {
     "metadata" : {
@@ -79,7 +81,8 @@
         "text/html" : ""
       },
       "output_type" : "execute_result",
-      "execution_count" : 3
+      "execution_count" : 3,
+      "time" : "Took: 1 second 476 milliseconds, at 2016-11-3 11:23"
     } ]
   }, {
     "metadata" : {
@@ -94,7 +97,7 @@
     "outputs" : [ {
       "name" : "stdout",
       "output_type" : "stream",
-      "text" : "org.apache.hadoop.mapred.InvalidInputException: Input path does not exist: file:/opt/docker/data/to-a-mouse.txt\n  at org.apache.hadoop.mapred.FileInputFormat.singleThreadedListStatus(FileInputFormat.java:287)\n  at org.apache.hadoop.mapred.FileInputFormat.listStatus(FileInputFormat.java:229)\n  at org.apache.hadoop.mapred.FileInputFormat.getSplits(FileInputFormat.java:315)\n  at org.apache.spark.rdd.HadoopRDD.getPartitions(HadoopRDD.scala:199)\n  at org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:239)\n  at org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:237)\n  at scala.Option.getOrElse(Option.scala:121)\n  at org.apache.spark.rdd.RDD.partitions(RDD.scala:237)\n  at org.apache.spark.rdd.MapPartitionsRDD.getPartitions(MapPartitionsRDD.scala:35)\n  at org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:239)\n  at org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:237)\n  at scala.Option.getOrElse(Option.scala:121)\n  at org.apache.spark.rdd.RDD.partitions(RDD.scala:237)\n  at org.apache.spark.rdd.MapPartitionsRDD.getPartitions(MapPartitionsRDD.scala:35)\n  at org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:239)\n  at org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:237)\n  at scala.Option.getOrElse(Option.scala:121)\n  at org.apache.spark.rdd.RDD.partitions(RDD.scala:237)\n  at org.apache.spark.rdd.MapPartitionsRDD.getPartitions(MapPartitionsRDD.scala:35)\n  at org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:239)\n  at org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:237)\n  at scala.Option.getOrElse(Option.scala:121)\n  at org.apache.spark.rdd.RDD.partitions(RDD.scala:237)\n  at org.apache.spark.Partitioner$.defaultPartitioner(Partitioner.scala:65)\n  at org.apache.spark.rdd.PairRDDFunctions$$anonfun$reduceByKey$3.apply(PairRDDFunctions.scala:331)\n  at org.apache.spark.rdd.PairRDDFunctions$$anonfun$reduceByKey$3.apply(PairRDDFunctions.scala:331)\n  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:150)\n  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:111)\n  at org.apache.spark.rdd.RDD.withScope(RDD.scala:316)\n  at org.apache.spark.rdd.PairRDDFunctions.reduceByKey(PairRDDFunctions.scala:330)\n  ... 55 elided\n"
+      "text" : "org.apache.hadoop.mapred.InvalidInputException: Input path does not exist: file:/opt/docker/data/to-a-mouse.txt\n  at org.apache.hadoop.mapred.FileInputFormat.singleThreadedListStatus(FileInputFormat.java:287)\n  at org.apache.hadoop.mapred.FileInputFormat.listStatus(FileInputFormat.java:229)\n  at org.apache.hadoop.mapred.FileInputFormat.getSplits(FileInputFormat.java:315)\n  at org.apache.spark.rdd.HadoopRDD.getPartitions(HadoopRDD.scala:199)\n  at org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:248)\n  at org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:246)\n  at scala.Option.getOrElse(Option.scala:121)\n  at org.apache.spark.rdd.RDD.partitions(RDD.scala:246)\n  at org.apache.spark.rdd.MapPartitionsRDD.getPartitions(MapPartitionsRDD.scala:35)\n  at org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:248)\n  at org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:246)\n  at scala.Option.getOrElse(Option.scala:121)\n  at org.apache.spark.rdd.RDD.partitions(RDD.scala:246)\n  at org.apache.spark.rdd.MapPartitionsRDD.getPartitions(MapPartitionsRDD.scala:35)\n  at org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:248)\n  at org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:246)\n  at scala.Option.getOrElse(Option.scala:121)\n  at org.apache.spark.rdd.RDD.partitions(RDD.scala:246)\n  at org.apache.spark.rdd.MapPartitionsRDD.getPartitions(MapPartitionsRDD.scala:35)\n  at org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:248)\n  at org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:246)\n  at scala.Option.getOrElse(Option.scala:121)\n  at org.apache.spark.rdd.RDD.partitions(RDD.scala:246)\n  at org.apache.spark.Partitioner$.defaultPartitioner(Partitioner.scala:65)\n  at org.apache.spark.rdd.PairRDDFunctions$$anonfun$reduceByKey$3.apply(PairRDDFunctions.scala:328)\n  at org.apache.spark.rdd.PairRDDFunctions$$anonfun$reduceByKey$3.apply(PairRDDFunctions.scala:328)\n  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)\n  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:112)\n  at org.apache.spark.rdd.RDD.withScope(RDD.scala:358)\n  at org.apache.spark.rdd.PairRDDFunctions.reduceByKey(PairRDDFunctions.scala:327)\n  ... 63 elided\n"
     } ]
   }, {
     "metadata" : {

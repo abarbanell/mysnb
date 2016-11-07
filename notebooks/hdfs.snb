@@ -47,7 +47,8 @@
         "text/html" : ""
       },
       "output_type" : "execute_result",
-      "execution_count" : 1
+      "execution_count" : 1,
+      "time" : "Took: 2 seconds 570 milliseconds, at 2016-11-3 11:22"
     } ]
   }, {
     "metadata" : {
@@ -61,14 +62,15 @@
     "outputs" : [ {
       "name" : "stdout",
       "output_type" : "stream",
-      "text" : "hdfs: org.apache.hadoop.fs.FileSystem = org.apache.hadoop.fs.LocalFileSystem@1a80dcbc\n"
+      "text" : "hdfs: org.apache.hadoop.fs.FileSystem = org.apache.hadoop.fs.LocalFileSystem@47943c89\n"
     }, {
       "metadata" : { },
       "data" : {
         "text/html" : ""
       },
       "output_type" : "execute_result",
-      "execution_count" : 2
+      "execution_count" : 2,
+      "time" : "Took: 2 seconds 3 milliseconds, at 2016-11-3 11:22"
     } ]
   }, {
     "metadata" : {
@@ -95,7 +97,8 @@
         "text/html" : ""
       },
       "output_type" : "execute_result",
-      "execution_count" : 3
+      "execution_count" : 3,
+      "time" : "Took: 1 second 598 milliseconds, at 2016-11-3 11:22"
     } ]
   }, {
     "metadata" : {
@@ -109,14 +112,15 @@
     "outputs" : [ {
       "name" : "stdout",
       "output_type" : "stream",
-      "text" : "iter: org.apache.hadoop.fs.RemoteIterator[org.apache.hadoop.fs.LocatedFileStatus] = org.apache.hadoop.fs.FileSystem$6@1b943c0d\n"
+      "text" : "iter: org.apache.hadoop.fs.RemoteIterator[org.apache.hadoop.fs.LocatedFileStatus] = org.apache.hadoop.fs.FileSystem$6@79e63e2\n"
     }, {
       "metadata" : { },
       "data" : {
         "text/html" : ""
       },
       "output_type" : "execute_result",
-      "execution_count" : 15
+      "execution_count" : 4,
+      "time" : "Took: 1 second 233 milliseconds, at 2016-11-3 11:22"
     } ]
   }, {
     "metadata" : {
@@ -128,16 +132,13 @@
     "cell_type" : "code",
     "source" : "while (iter.hasNext()) {\n  val fileStatus = iter.next()\n  println(fileStatus.toString())\n}\n",
     "outputs" : [ {
-      "name" : "stdout",
-      "output_type" : "stream",
-      "text" : "LocatedFileStatus{path=file:/opt/docker/data/test.txt; isDirectory=false; length=0; replication=1; blocksize=33554432; modification_time=1467489604000; access_time=0; owner=root; group=root; permission=rw-r--r--; isSymlink=false}\n"
-    }, {
       "metadata" : { },
       "data" : {
         "text/html" : ""
       },
       "output_type" : "execute_result",
-      "execution_count" : 16
+      "execution_count" : 5,
+      "time" : "Took: 2 seconds 203 milliseconds, at 2016-11-3 11:22"
     } ]
   }, {
     "metadata" : {
@@ -158,7 +159,8 @@
         "text/html" : ""
       },
       "output_type" : "execute_result",
-      "execution_count" : 6
+      "execution_count" : 6,
+      "time" : "Took: 1 second 695 milliseconds, at 2016-11-3 11:22"
     } ]
   }, {
     "metadata" : {
