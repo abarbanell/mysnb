@@ -1,0 +1,95 @@
+{
+  "metadata" : {
+    "name" : "lgdata",
+    "user_save_timestamp" : "1970-01-01T00:00:00.000Z",
+    "auto_save_timestamp" : "1970-01-01T00:00:00.000Z",
+    "language_info" : {
+      "name" : "scala",
+      "file_extension" : "scala",
+      "codemirror_mode" : "text/x-scala"
+    },
+    "trusted" : true,
+    "customLocalRepo" : null,
+    "customRepos" : null,
+    "customDeps" : null,
+    "customImports" : null,
+    "customArgs" : null,
+    "customSparkConf" : null
+  },
+  "cells" : [ {
+    "metadata" : {
+      "id" : "CC35D7BC14164BC4965235A97B98F156"
+    },
+    "cell_type" : "markdown",
+    "source" : "#LG Data\nExtract data from limitless garden server via API (https: lg.dokku.abarbanell.de) and analyse with spark.\n\n## API\nthe API is still work in progress (https:github.com/abarbanell/limitless-garden) and not all necessary API calls are yet available. \n\nThe following API is new and working, but not much data points yet: \n\n- GET /api/sensors/\n- GET /api/sensors/:id\n\nThe following API calls are not yet available: \n\n- GET /api/sensors/:id/data\n\nWe do have the old collection API\n\n- GET /api/collections/sensor (with paging and offset), only this call has currently data.\n\nAuthentication: you need an user_key which you can retrieve from threescale, but we have baked a demo key in here which allows a restriced amount of calls per minute (approx 10/min). In development we can bypass the authentication with the magit API key \"true\", but this only works in dev.\n\n"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "1C6B5A49D1B643D1839CF6DC84083A77"
+    },
+    "cell_type" : "code",
+    "source" : "// development connection \nval userKey = \"true\"\nval baseHost = \"http://localhost:5001\"\nval baseUrl = \"/api/collections/sensor\"\nval queryString = \"?user_key=\" + userKey\nval fullUrl = baseHost + baseUrl // + queryString\nval lgdataDir = \"lg.d\"\n",
+    "outputs" : [ {
+      "name" : "stdout",
+      "output_type" : "stream",
+      "text" : "userKey: String = true\nbaseHost: String = http://localhost:5001\nbaseUrl: String = /api/collections/sensor\nqueryString: String = ?user_key=true\nfullUrl: String = http://localhost:5001/api/collections/sensor\nlgdataDir: String = lg.d\n"
+    }, {
+      "metadata" : { },
+      "data" : {
+        "text/html" : ""
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 15,
+      "time" : "Took: 946 milliseconds, at 2017-1-22 14:38"
+    } ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "E8072DFD201342FE810E0B3423FBE3DE"
+    },
+    "cell_type" : "code",
+    "source" : "// this gets a file from url and saves as text\ndef getFileFromURL (url:String, dir:String) : Boolean = {\n  println(\"get from url: \"+ url)\n  val hadoopConf = sc.hadoopConfiguration\n  val fs = org.apache.hadoop.fs.FileSystem.get(hadoopConf)\n  if (fs.exists(new org.apache.hadoop.fs.Path(dir))) {\n    return true\n  } else {\n    val str = scala.io.Source.fromURL(url).mkString\n    val list = str.split(\"\\n\").filter(_ != \"\")\n    val rdds = sc.parallelize(list)\n    rdds.saveAsTextFile(dir)\n    return true\n  }\n  return false\n}",
+    "outputs" : [ {
+      "name" : "stdout",
+      "output_type" : "stream",
+      "text" : "getFileFromURL: (url: String, dir: String)Boolean\n"
+    }, {
+      "metadata" : { },
+      "data" : {
+        "text/html" : ""
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 16,
+      "time" : "Took: 991 milliseconds, at 2017-1-22 14:38"
+    } ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "0CD08C60D4094D9987335B928949A06C"
+    },
+    "cell_type" : "code",
+    "source" : "// need to handle API key and faival src = getFileFromURL(fullUrl, lgdataDir)",
+    "outputs" : [ {
+      "name" : "stdout",
+      "output_type" : "stream",
+      "text" : "get from url: http://localhost:5001/api/collections/sensor\njava.net.ConnectException: Connection refused (Connection refused)\n  at java.net.PlainSocketImpl.socketConnect(Native Method)\n  at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:339)\n  at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:200)\n  at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:182)\n  at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)\n  at java.net.Socket.connect(Socket.java:579)\n  at java.net.Socket.connect(Socket.java:528)\n  at sun.net.NetworkClient.doConnect(NetworkClient.java:180)\n  at sun.net.www.http.HttpClient.openServer(HttpClient.java:432)\n  at sun.net.www.http.HttpClient.openServer(HttpClient.java:527)\n  at sun.net.www.http.HttpClient.<init>(HttpClient.java:211)\n  at sun.net.www.http.HttpClient.New(HttpClient.java:308)\n  at sun.net.www.http.HttpClient.New(HttpClient.java:326)\n  at sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1037)\n  at sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:973)\n  at sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:891)\n  at sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1341)\n  at java.net.URL.openStream(URL.java:1048)\n  at scala.io.Source$.fromURL(Source.scala:141)\n  at scala.io.Source$.fromURL(Source.scala:131)\n  at getFileFromURL(<console>:77)\n  ... 63 elided\n"
+    } ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "4D1100BA256748FA8030202E184F52CD"
+    },
+    "cell_type" : "code",
+    "source" : "",
+    "outputs" : [ ]
+  } ],
+  "nbformat" : 4
+}
