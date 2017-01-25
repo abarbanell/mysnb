@@ -30,19 +30,19 @@
       "id" : "1C6B5A49D1B643D1839CF6DC84083A77"
     },
     "cell_type" : "code",
-    "source" : "// development connection \nval userKey = \"true\"\nval baseHost = \"http://localhost:5001\"\nval baseUrl = \"/api/collections/sensor\"\nval queryString = \"?user_key=\" + userKey\nval fullUrl = baseHost + baseUrl // + queryString\nval lgdataDir = \"lg.d\"\n",
+    "source" : "// this userKey is rate-limited\nval userKey = \"6ed4688d8d487a95f4aec4f2136b04ae\"\nval baseHost = \"http://lg.dokku.abarbanell.de\"\nval baseUrl = \"/api/collections/sensor\"\nval queryString = \"?user_key=\" + userKey\nval fullUrl = baseHost + baseUrl  + queryString\nval lgDataDir = \"lg.d\"\n",
     "outputs" : [ {
       "name" : "stdout",
       "output_type" : "stream",
-      "text" : "userKey: String = true\nbaseHost: String = http://localhost:5001\nbaseUrl: String = /api/collections/sensor\nqueryString: String = ?user_key=true\nfullUrl: String = http://localhost:5001/api/collections/sensor\nlgdataDir: String = lg.d\n"
+      "text" : "userKey: String = 6ed4688d8d487a95f4aec4f2136b04ae\nbaseHost: String = http://lg.dokku.abarbanell.de\nbaseUrl: String = /api/collections/sensor\nqueryString: String = ?user_key=6ed4688d8d487a95f4aec4f2136b04ae\nfullUrl: String = http://lg.dokku.abarbanell.de/api/collections/sensor?user_key=6ed4688d8d487a95f4aec4f2136b04ae\nlgDataDir: String = lg.d\n"
     }, {
       "metadata" : { },
       "data" : {
         "text/html" : ""
       },
       "output_type" : "execute_result",
-      "execution_count" : 15,
-      "time" : "Took: 946 milliseconds, at 2017-1-22 14:38"
+      "execution_count" : 37,
+      "time" : "Took: 522 milliseconds, at 2017-1-25 13:36"
     } ]
   }, {
     "metadata" : {
@@ -52,7 +52,7 @@
       "id" : "E8072DFD201342FE810E0B3423FBE3DE"
     },
     "cell_type" : "code",
-    "source" : "// this gets a file from url and saves as text\ndef getFileFromURL (url:String, dir:String) : Boolean = {\n  println(\"get from url: \"+ url)\n  val hadoopConf = sc.hadoopConfiguration\n  val fs = org.apache.hadoop.fs.FileSystem.get(hadoopConf)\n  if (fs.exists(new org.apache.hadoop.fs.Path(dir))) {\n    return true\n  } else {\n    val str = scala.io.Source.fromURL(url).mkString\n    val list = str.split(\"\\n\").filter(_ != \"\")\n    val rdds = sc.parallelize(list)\n    rdds.saveAsTextFile(dir)\n    return true\n  }\n  return false\n}",
+    "source" : "// this gets a file from url and saves as text\ndef getFileFromURL (url:String, dir:String) : Boolean = {\n  println(\"get from url: \"+ url)\n  val hadoopConf = sc.hadoopConfiguration\n  val fs = org.apache.hadoop.fs.FileSystem.get(hadoopConf)\n  if (fs.exists(new org.apache.hadoop.fs.Path(dir))) {\n    return true\n  } else {\n    val str = scala.io.Source.fromURL(url).mkString\n    val list = str.split(\"\\n\").filter(_ != \"\")\n    println(list.toString())\n    val rdds = sc.parallelize(list)\n    rdds.saveAsTextFile(dir)\n    return true\n  }\n  return false\n}",
     "outputs" : [ {
       "name" : "stdout",
       "output_type" : "stream",
@@ -63,8 +63,53 @@
         "text/html" : ""
       },
       "output_type" : "execute_result",
-      "execution_count" : 16,
-      "time" : "Took: 991 milliseconds, at 2017-1-22 14:38"
+      "execution_count" : 38,
+      "time" : "Took: 584 milliseconds, at 2017-1-25 13:36"
+    } ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "4D1100BA256748FA8030202E184F52CD"
+    },
+    "cell_type" : "code",
+    "source" : "def deleteFile(dir: String): Boolean = {\n  println(\"delete data dir: \"+ dir)\n  val hc = sc.hadoopConfiguration\n  val fs = org.apache.hadoop.fs.FileSystem.get(hc)\n  val p = new org.apache.hadoop.fs.Path(dir)\n  if (fs.exists(p)) {\n    fs.delete(p,true)\n    return true \n  } else { \n    return false\n  }\n}",
+    "outputs" : [ {
+      "name" : "stdout",
+      "output_type" : "stream",
+      "text" : "deleteFile: (dir: String)Boolean\n"
+    }, {
+      "metadata" : { },
+      "data" : {
+        "text/html" : ""
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 39,
+      "time" : "Took: 553 milliseconds, at 2017-1-25 13:36"
+    } ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "output_stream_collapsed" : true,
+      "collapsed" : false,
+      "id" : "A5DAB7255E7042A2AC4C6CCE4D831828"
+    },
+    "cell_type" : "code",
+    "source" : "deleteFile(lgDataDir)\n",
+    "outputs" : [ {
+      "name" : "stdout",
+      "output_type" : "stream",
+      "text" : "delete data dir: lg.d\nres55: Boolean = true\n"
+    }, {
+      "metadata" : { },
+      "data" : {
+        "text/html" : "true"
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 40,
+      "time" : "Took: 910 milliseconds, at 2017-1-25 13:37"
     } ]
   }, {
     "metadata" : {
@@ -74,18 +119,26 @@
       "id" : "0CD08C60D4094D9987335B928949A06C"
     },
     "cell_type" : "code",
-    "source" : "// need to handle API key and faival src = getFileFromURL(fullUrl, lgdataDir)",
+    "source" : "// need to handle API key and faival src = getFileFromURL(fullUrl, lgdataDir)\ngetFileFromURL(fullUrl, lgDataDir)\n",
     "outputs" : [ {
       "name" : "stdout",
       "output_type" : "stream",
-      "text" : "get from url: http://localhost:5001/api/collections/sensor\njava.net.ConnectException: Connection refused (Connection refused)\n  at java.net.PlainSocketImpl.socketConnect(Native Method)\n  at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:339)\n  at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:200)\n  at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:182)\n  at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)\n  at java.net.Socket.connect(Socket.java:579)\n  at java.net.Socket.connect(Socket.java:528)\n  at sun.net.NetworkClient.doConnect(NetworkClient.java:180)\n  at sun.net.www.http.HttpClient.openServer(HttpClient.java:432)\n  at sun.net.www.http.HttpClient.openServer(HttpClient.java:527)\n  at sun.net.www.http.HttpClient.<init>(HttpClient.java:211)\n  at sun.net.www.http.HttpClient.New(HttpClient.java:308)\n  at sun.net.www.http.HttpClient.New(HttpClient.java:326)\n  at sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1037)\n  at sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:973)\n  at sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:891)\n  at sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1341)\n  at java.net.URL.openStream(URL.java:1048)\n  at scala.io.Source$.fromURL(Source.scala:141)\n  at scala.io.Source$.fromURL(Source.scala:131)\n  at getFileFromURL(<console>:77)\n  ... 63 elided\n"
+      "text" : "get from url: http://lg.dokku.abarbanell.de/api/collections/sensor?user_key=6ed4688d8d487a95f4aec4f2136b04ae\n[Ljava.lang.String;@2f566464\nres57: Boolean = true\n"
+    }, {
+      "metadata" : { },
+      "data" : {
+        "text/html" : "true"
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 41,
+      "time" : "Took: 1 second 100 milliseconds, at 2017-1-25 13:37"
     } ]
   }, {
     "metadata" : {
       "trusted" : true,
       "input_collapsed" : false,
       "collapsed" : true,
-      "id" : "4D1100BA256748FA8030202E184F52CD"
+      "id" : "81FEB979E19445308A39C38539824992"
     },
     "cell_type" : "code",
     "source" : "",
