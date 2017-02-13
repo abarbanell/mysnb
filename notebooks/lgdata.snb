@@ -21,7 +21,13 @@
       "id" : "CC35D7BC14164BC4965235A97B98F156"
     },
     "cell_type" : "markdown",
-    "source" : "#LG Data\nExtract data from limitless garden server via API (https: lg.dokku.abarbanell.de) and analyse with spark.\n\n## API\nthe API is still work in progress (https:github.com/abarbanell/limitless-garden) and not all necessary API calls are yet available. \n\nThe following API is new and working, but not much data points yet: \n\n- GET /api/sensors/\n- GET /api/sensors/:id\n\nThe following API calls are not yet available: \n\n- GET /api/sensors/:id/data\n\nWe do have the old collection API\n\n- GET /api/collections/sensor (with paging and offset), only this call has currently data.\n\nAuthentication: you need an user_key which you can retrieve from threescale, but we have baked a demo key in here which allows a restriced amount of calls per minute (approx 10/min). In development we can bypass the authentication with the magit API key \"true\", but this only works in dev.\n\n"
+    "source" : "#LG Data\nExtract data from limitless garden server via API (https: lg.dokku.abarbanell.de) and analyse with spark.\n\n## API\nthe API is still work in progress (https:github.com/abarbanell/limitless-garden) and not all necessary API calls are yet available. \n\nThe following API is new and working, but not much data points yet: \n\n- GET /api/sensors/\n- GET /api/sensors/:id\n\nThe following API calls are not yet available: \n\n- GET /api/sensors/:id/data\n\nWe do have the old collection API\n\n- GET /api/collections/sensor (with paging and offset), only this call has currently data.\n\nAuthentication: you need an user_key which you can retrieve from threescale, but we have baked a demo key in here which allows a restriced amount of calls per minute (approx 10/min). In development we can bypass the authentication with the magic API key \"true\", but this is only enabled in dev.\n\n"
+  }, {
+    "metadata" : {
+      "id" : "BE4967247E91410F9BC69F16D0AB3A77"
+    },
+    "cell_type" : "markdown",
+    "source" : "## constants"
   }, {
     "metadata" : {
       "trusted" : true,
@@ -30,20 +36,26 @@
       "id" : "1C6B5A49D1B643D1839CF6DC84083A77"
     },
     "cell_type" : "code",
-    "source" : "// this userKey is rate-limited\nval userKey = \"6ed4688d8d487a95f4aec4f2136b04ae\"\nval baseHost = \"http://lg.dokku.abarbanell.de\"\nval baseUrl = \"/api/collections/sensor\"\nval queryString = \"?user_key=\" + userKey\nval fullUrl = baseHost + baseUrl  + queryString\nval lgDataDir = \"lg.d\"\n",
+    "source" : "// this userKey is rate-limited\nval userKey = \"6ed4688d8d487a95f4aec4f2136b04ae\"\nval baseHost = \"https://lg.dokku.abarbanell.de\"\nval baseUrl = \"/api/collections/sensor\"\nval queryString = \"?user_key=\" + userKey\nval fullUrl = baseHost + baseUrl  + queryString\nval lgDataDir = \"lg.d\"\n",
     "outputs" : [ {
       "name" : "stdout",
       "output_type" : "stream",
-      "text" : "userKey: String = 6ed4688d8d487a95f4aec4f2136b04ae\nbaseHost: String = http://lg.dokku.abarbanell.de\nbaseUrl: String = /api/collections/sensor\nqueryString: String = ?user_key=6ed4688d8d487a95f4aec4f2136b04ae\nfullUrl: String = http://lg.dokku.abarbanell.de/api/collections/sensor?user_key=6ed4688d8d487a95f4aec4f2136b04ae\nlgDataDir: String = lg.d\n"
+      "text" : "userKey: String = 6ed4688d8d487a95f4aec4f2136b04ae\nbaseHost: String = https://lg.dokku.abarbanell.de\nbaseUrl: String = /api/collections/sensor\nqueryString: String = ?user_key=6ed4688d8d487a95f4aec4f2136b04ae\nfullUrl: String = https://lg.dokku.abarbanell.de/api/collections/sensor?user_key=6ed4688d8d487a95f4aec4f2136b04ae\nlgDataDir: String = lg.d\n"
     }, {
       "metadata" : { },
       "data" : {
         "text/html" : ""
       },
       "output_type" : "execute_result",
-      "execution_count" : 37,
-      "time" : "Took: 522 milliseconds, at 2017-1-25 13:36"
+      "execution_count" : 9,
+      "time" : "Took: 794 milliseconds, at 2017-2-13 10:53"
     } ]
+  }, {
+    "metadata" : {
+      "id" : "6FCFC762CB5F47C588B1A7CE0D95A4CC"
+    },
+    "cell_type" : "markdown",
+    "source" : "## some functions"
   }, {
     "metadata" : {
       "trusted" : true,
@@ -63,8 +75,8 @@
         "text/html" : ""
       },
       "output_type" : "execute_result",
-      "execution_count" : 38,
-      "time" : "Took: 584 milliseconds, at 2017-1-25 13:36"
+      "execution_count" : 10,
+      "time" : "Took: 847 milliseconds, at 2017-2-13 10:53"
     } ]
   }, {
     "metadata" : {
@@ -85,9 +97,15 @@
         "text/html" : ""
       },
       "output_type" : "execute_result",
-      "execution_count" : 39,
-      "time" : "Took: 553 milliseconds, at 2017-1-25 13:36"
+      "execution_count" : 11,
+      "time" : "Took: 833 milliseconds, at 2017-2-13 10:53"
     } ]
+  }, {
+    "metadata" : {
+      "id" : "84C6C90EBCA24C5F881F59CCB2C6D9D5"
+    },
+    "cell_type" : "markdown",
+    "source" : "## get data\nalways fresh data so we delete data dir before fetching.\n"
   }, {
     "metadata" : {
       "trusted" : true,
@@ -97,19 +115,19 @@
       "id" : "A5DAB7255E7042A2AC4C6CCE4D831828"
     },
     "cell_type" : "code",
-    "source" : "deleteFile(lgDataDir)\n",
+    "source" : "//deleteFile(lgDataDir)\n\norg.apache.hadoop.fs.FileSystem.get(sc.hadoopConfiguration).delete(new org.apache.hadoop.fs.Path(lgDataDir), true)\n",
     "outputs" : [ {
       "name" : "stdout",
       "output_type" : "stream",
-      "text" : "delete data dir: lg.d\nres55: Boolean = true\n"
+      "text" : "res16: Boolean = true\n"
     }, {
       "metadata" : { },
       "data" : {
         "text/html" : "true"
       },
       "output_type" : "execute_result",
-      "execution_count" : 40,
-      "time" : "Took: 910 milliseconds, at 2017-1-25 13:37"
+      "execution_count" : 12,
+      "time" : "Took: 1 second 96 milliseconds, at 2017-2-13 10:53"
     } ]
   }, {
     "metadata" : {
@@ -123,15 +141,15 @@
     "outputs" : [ {
       "name" : "stdout",
       "output_type" : "stream",
-      "text" : "get from url: http://lg.dokku.abarbanell.de/api/collections/sensor?user_key=6ed4688d8d487a95f4aec4f2136b04ae\n[Ljava.lang.String;@2f566464\nres57: Boolean = true\n"
+      "text" : "get from url: https://lg.dokku.abarbanell.de/api/collections/sensor?user_key=6ed4688d8d487a95f4aec4f2136b04ae\n[Ljava.lang.String;@25de6aae\nres18: Boolean = true\n"
     }, {
       "metadata" : { },
       "data" : {
         "text/html" : "true"
       },
       "output_type" : "execute_result",
-      "execution_count" : 41,
-      "time" : "Took: 1 second 100 milliseconds, at 2017-1-25 13:37"
+      "execution_count" : 13,
+      "time" : "Took: 3 seconds 282 milliseconds, at 2017-2-13 10:53"
     } ]
   }, {
     "metadata" : {
@@ -139,6 +157,107 @@
       "input_collapsed" : false,
       "collapsed" : true,
       "id" : "81FEB979E19445308A39C38539824992"
+    },
+    "cell_type" : "markdown",
+    "source" : "We may have now the text in our hdfs file. Now get it into a text rdd\n"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "97D647F80E9E4E908F5B2271E31190C7"
+    },
+    "cell_type" : "code",
+    "source" : "val inputfile = sc.textFile(lgDataDir)",
+    "outputs" : [ {
+      "name" : "stdout",
+      "output_type" : "stream",
+      "text" : "inputfile: org.apache.spark.rdd.RDD[String] = lg.d MapPartitionsRDD[7] at textFile at <console>:69\n"
+    }, {
+      "metadata" : { },
+      "data" : {
+        "text/html" : ""
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 14,
+      "time" : "Took: 809 milliseconds, at 2017-2-13 10:53"
+    } ]
+  }, {
+    "metadata" : {
+      "id" : "B214239DF8A249AEB47A1179730FB466"
+    },
+    "cell_type" : "markdown",
+    "source" : "look at the file content"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "778B2086431E42D1A053B79A9217DBB5"
+    },
+    "cell_type" : "code",
+    "source" : "inputfile.take(1).foreach( { line => println(line) } )",
+    "outputs" : [ {
+      "name" : "stdout",
+      "output_type" : "stream",
+      "text" : "[{\"_id\":\"58504d6948e01100073bec93\",\"temperature\":24.4,\"soil\":367,\"humidity\":33.2,\"host\":\"rpi02\",\"timestamp\":\"2016-12-13T19:35:03.895033\",\"sensor\":[\"soil\",\"humidity\",\"temperature\"]},{\"_id\":\"58504d8f48e01100073bec94\",\"host\":\"ESP_CBBAAB\",\"sensor\":[\"capacitance\",\"temperature\",\"light\"],\"capacitance\":975,\"temperature\":23,\"light\":13877},{\"_id\":\"58504e9748e01100073bec95\",\"temperature\":24.4,\"soil\":367,\"humidity\":32.9,\"host\":\"rpi02\",\"timestamp\":\"2016-12-13T19:40:06.523466\",\"sensor\":[\"soil\",\"humidity\",\"temperature\"]},{\"_id\":\"58504ec048e01100073bec96\",\"host\":\"ESP_CBBAAB\",\"sensor\":[\"capacitance\",\"temperature\",\"light\"],\"capacitance\":971,\"temperature\":23,\"light\":13837},{\"_id\":\"58504fc248e01100073bec97\",\"temperature\":24.4,\"soil\":365,\"humidity\":32.9,\"host\":\"rpi02\",\"timestamp\":\"2016-12-13T19:45:05.112027\",\"sensor\":[\"soil\",\"humidity\",\"temperature\"]},{\"_id\":\"58504ff148e01100073bec98\",\"host\":\"ESP_CBBAAB\",\"sensor\":[\"capacitance\",\"temperature\",\"light\"],\"capacitance\":985,\"temperature\":23,\"light\":13868},{\"_id\":\"585050ee48e01100073bec99\",\"temperature\":24.4,\"soil\":367,\"humidity\":32.9,\"host\":\"rpi02\",\"timestamp\":\"2016-12-13T19:50:04.958230\",\"sensor\":[\"soil\",\"humidity\",\"temperature\"]},{\"_id\":\"5850512248e01100073bec9a\",\"host\":\"ESP_CBBAAB\",\"sensor\":[\"capacitance\",\"temperature\",\"light\"],\"capacitance\":974,\"temperature\":23,\"light\":13880},{\"_id\":\"5850521a48e01100073bec9b\",\"temperature\":24.4,\"soil\":364,\"humidity\":33,\"host\":\"rpi02\",\"timestamp\":\"2016-12-13T19:55:05.555458\",\"sensor\":[\"soil\",\"humidity\",\"temperature\"]},{\"_id\":\"5850525348e01100073bec9c\",\"host\":\"ESP_CBBAAB\",\"sensor\":[\"capacitance\",\"temperature\",\"light\"],\"capacitance\":976,\"temperature\":23,\"light\":13965}]\n"
+    }, {
+      "metadata" : { },
+      "data" : {
+        "text/html" : ""
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 16,
+      "time" : "Took: 1 second 146 milliseconds, at 2017-2-13 10:53"
+    } ]
+  }, {
+    "metadata" : {
+      "id" : "1DF4900255294F4080F2DD00EB4D7845"
+    },
+    "cell_type" : "markdown",
+    "source" : "We now got one long line with a json array, limited by the default limit 10 objects per request (can be changed via query string parameters...) \n"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "809F2A59677C4F7F91ED2A9DA92A95BC"
+    },
+    "cell_type" : "code",
+    "source" : "val df = sqlContext.read.json(inputfile) // error, need to find sqlcontext first...",
+    "outputs" : [ {
+      "name" : "stdout",
+      "output_type" : "stream",
+      "text" : "<console>:71: error: value sqlContext is not a member of org.apache.spark.SparkContext\n       val df = sc.sqlContext.read.json(inputfile)\n                   ^\n"
+    } ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "B53404F72519468384499BFDDEF85C08"
+    },
+    "cell_type" : "code",
+    "source" : "sc",
+    "outputs" : [ {
+      "name" : "stdout",
+      "output_type" : "stream",
+      "text" : "res33: org.apache.spark.SparkContext = org.apache.spark.SparkContext@62515e6f\n"
+    }, {
+      "metadata" : { },
+      "data" : {
+        "text/html" : "org.apache.spark.SparkContext@62515e6f"
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 22,
+      "time" : "Took: 652 milliseconds, at 2017-2-13 11:6"
+    } ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "50A21939F8C34C6CB9DB450341D7A23E"
     },
     "cell_type" : "code",
     "source" : "",
