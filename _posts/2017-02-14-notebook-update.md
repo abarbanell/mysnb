@@ -7,8 +7,8 @@ tags: spark, scala, notebook
 Today I would like to note down some observations from 
 updating the notebooks to newer versions of everything. 
 
-As of today. the newest versions on Andy Petrella's [Spark Notebook]
-(http://spark-notebook.io/) website are 
+As of today. the newest versions on Andy Petrella's 
+[Spark Notebook](http://spark-notebook.io/) website are 
 
 - notebook 0.7
 - Scala 2.11.8
@@ -86,7 +86,7 @@ org.apache.bahir % spark-streaming-twitter_2.11 % 2.0.2
 - org.apache.hadoop % _ % _
 ```
 
-Another chnage is required for showing the widgets. 
+Another change is required for showing the widgets. 
 First, the GeoPointsChart has moved down one level in the class hierarchy 
 and the creation now becomes 
 
@@ -97,7 +97,7 @@ val geo = widgets.charts.GeoPointsChart(Seq((0d,0d, "init")))
 Second, both the geo and the html widget are assigned to val's but this does 
 not actually show them, so I changed the respective cells to 
 
-````
+```
 val result = ul(10)
 result
 ```
@@ -112,6 +112,11 @@ geo
 ```
 
 This got the notebook to run and I have let this updated version in my 
-repo in the mysnb folder.
+repo in the mysnb folder - for fun I have changed the filter keywords a i
+little.
 
+I hope this was helpful, you may also like the articles on my 
+[main blog](http://blog.abarbanell.de/) or, for less technical 
+fun, how about some [videos](https://goo.gl/qT7GBy)?
 
+You are always welcome to comment below.
