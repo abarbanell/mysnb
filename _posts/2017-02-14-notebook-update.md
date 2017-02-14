@@ -80,9 +80,9 @@ Spark. Also the other libraries should be using the scala 2.11 versions,
 and have generally some updates. I changed the dependencies to
 
 ```
-:dp org.apache.spark % spark-streaming_2.11 % 2.1.0
-org.apache.bahir % spark-streaming-twitter_2.11 % 2.0.2
-- org.apache.spark % spark-core_2.11 % _
+:dp org.apache.spark %% spark-streaming % 2.1.0
+org.apache.bahir %% spark-streaming-twitter % 2.0.2
+- org.apache.spark %% spark-core % _
 - org.apache.hadoop % _ % _
 ```
 
