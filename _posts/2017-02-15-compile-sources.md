@@ -1,5 +1,5 @@
 ---
-title: Compile from sources Spark Notebook
+title: Compile  Spark Notebook from sources
 category: spark
 tags: spark, scala, notebook
 ---
