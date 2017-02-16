@@ -1,18 +1,16 @@
 {% include base_path %}
 
+<div class="page__comments">
   {% if site.google_ad_client %}
-
-	<div class="page__ads">	
-		<!-- sudebar-responsive --> 
+		<!-- footer-responsive --> 
 			<ins class="adsbygoogle"
 					 style="display:block"
-					 data-ad-client={{ site.google_ad_client }}
-					 data-ad-slot={{ site.google_ad_slot }}
+					 data-ad-client={%= site.google_ad_client %}
+					 data-ad-slot={%= site.google_ad_slot %}
 					 data-ad-format="auto">
 			</ins>
 		<script>
 		(adsbygoogle = window.adsbygoogle || []).push({});
 		</script>
-	</div>
   {% endif %}
-
+</div>
