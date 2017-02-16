@@ -1,8 +1,9 @@
 {% include base_path %}
 
-<div class="page__comments">
   {% if site.google_ad_client %}
-		<!-- footer-responsive --> 
+
+	<div class="page__ads">	
+		<!-- sudebar-responsive --> 
 			<ins class="adsbygoogle"
 					 style="display:block"
 					 data-ad-client={{ site.google_ad_client }}
@@ -12,5 +13,6 @@
 		<script>
 		(adsbygoogle = window.adsbygoogle || []).push({});
 		</script>
+	</div>
   {% endif %}
-</div>
+

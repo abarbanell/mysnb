@@ -276,6 +276,17 @@
   }
 }
 
+/*
+   Ad block
+   ========================================================================== */
+
+.page__ads {
+  @include full();
+  margin-top: 1rem;
+  margin-bottom: 10px;
+  padding-top: 1rem;
+  border-top: 1px solid $border-color;
+}
 
 /*
    Comments
