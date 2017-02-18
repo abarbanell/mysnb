@@ -1,0 +1,397 @@
+{
+  "metadata" : {
+    "name" : "Twitter Example",
+    "user_save_timestamp" : "1970-01-01T01:00:00.000Z",
+    "auto_save_timestamp" : "1970-01-01T01:00:00.000Z",
+    "language_info" : {
+      "name" : "scala",
+      "file_extension" : "scala",
+      "codemirror_mode" : "text/x-scala"
+    },
+    "trusted" : true,
+    "customLocalRepo" : null,
+    "customRepos" : null,
+    "customDeps" : null,
+    "customImports" : null,
+    "customArgs" : null,
+    "customSparkConf" : null
+  },
+  "cells" : [ {
+    "metadata" : {
+      "id" : "1644AD40FF1848988B8198F6A1A2A5D7"
+    },
+    "cell_type" : "markdown",
+    "source" : "#TweetFeed - listening to Twitter API"
+  }, {
+    "metadata" : {
+      "id" : "D8EB5D646589461AAA7B4F3E1920DDA1"
+    },
+    "cell_type" : "markdown",
+    "source" : "## Set up"
+  }, {
+    "metadata" : {
+      "id" : "7EEFC156C7E64DD18DE50E5478154BC1"
+    },
+    "cell_type" : "markdown",
+    "source" : "### Set local repo for deps"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "0AA57254701E4C80ACE5846ACCCF658E"
+    },
+    "cell_type" : "code",
+    "source" : ":local-repo /tmp/repo",
+    "outputs" : [ {
+      "name" : "stdout",
+      "output_type" : "stream",
+      "text" : "res1: String = Repo changed to /tmp/repo!\n"
+    }, {
+      "metadata" : { },
+      "data" : {
+        "text/plain" : "Repo changed to /tmp/repo!"
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 1,
+      "time" : "Took: 2 seconds 344 milliseconds, at 2017-2-14 16:18"
+    } ]
+  }, {
+    "metadata" : {
+      "id" : "0201320F8D234D7F9EEAAF221EFC5F25"
+    },
+    "cell_type" : "markdown",
+    "source" : "### Add streaming + twitter deps "
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "presentation" : {
+        "tabs_state" : "{\n  \"tab_id\": \"#tab693493699-0\"\n}",
+        "pivot_chart_state" : "{\n  \"hiddenAttributes\": [],\n  \"menuLimit\": 200,\n  \"cols\": [],\n  \"rows\": [],\n  \"vals\": [],\n  \"exclusions\": {},\n  \"inclusions\": {},\n  \"unusedAttrsVertical\": 85,\n  \"autoSortUnusedAttrs\": false,\n  \"inclusionsInfo\": {},\n  \"aggregatorName\": \"Count\",\n  \"rendererName\": \"Table\"\n}"
+      },
+      "id" : "EE4717C7DF5A4F308D94FE4A10B9DA35"
+    },
+    "cell_type" : "code",
+    "source" : ":dp org.apache.spark %% spark-streaming % 2.1.0\norg.apache.bahir %% spark-streaming-twitter % 2.0.2\n- org.apache.spark %% spark-core % _\n- org.apache.hadoop % _ % _",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "261E9935BA3A4D3BABF5197E9974EBDD"
+    },
+    "cell_type" : "markdown",
+    "source" : "### Install the twitter credentials "
+  }, {
+    "metadata" : {
+      "id" : "67A0BE670F91412687FB135202B37762"
+    },
+    "cell_type" : "markdown",
+    "source" : "**Note:** we are using the `env` variables here. For this, adapt the following and execute before launching the server\n```\n  export TWITTER_CONSUMER_KEY=...\n  export TWITTER_CONSUMER_SECRET=\"...\n  export TWITTER_ACCESS_TOKEN=...\n  export TWITTER_ACCESS_TOKEN_SECRET=...\n```"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "4067CE99DD8440BA989C2A07497727DF"
+    },
+    "cell_type" : "code",
+    "source" : "def $(s:String) = sys.env(s)\nSystem.setProperty(\"twitter4j.oauth.consumerKey\", $(\"TWITTER_CONSUMER_KEY\"))\nSystem.setProperty(\"twitter4j.oauth.consumerSecret\", $(\"TWITTER_CONSUMER_SECRET\"))\nSystem.setProperty(\"twitter4j.oauth.accessToken\", $(\"TWITTER_ACCESS_TOKEN\"))\nSystem.setProperty(\"twitter4j.oauth.accessTokenSecret\", $(\"TWITTER_ACCESS_TOKEN_SECRET\"))\n\"twitter settings done!\"",
+    "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "91B8BC6550E3406889CA0581279CFAC7"
+    },
+    "cell_type" : "markdown",
+    "source" : "## Spark streaming"
+  }, {
+    "metadata" : {
+      "id" : "F3027C453654483287A7A0FB20558996"
+    },
+    "cell_type" : "markdown",
+    "source" : "### Create context with batch 2s "
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "B09A7A2C508A4A4BBE6CBFB5FA1815C7"
+    },
+    "cell_type" : "code",
+    "source" : "import org.apache.spark.streaming.{Seconds, StreamingContext}\nimport org.apache.spark.SparkContext._\nimport org.apache.spark.streaming.twitter._\n\nval ssc = new StreamingContext(sparkContext, Seconds(2))",
+    "outputs" : [ {
+      "name" : "stdout",
+      "output_type" : "stream",
+      "text" : "import org.apache.spark.streaming.{Seconds, StreamingContext}\nimport org.apache.spark.SparkContext._\nimport org.apache.spark.streaming.twitter._\nssc: org.apache.spark.streaming.StreamingContext = org.apache.spark.streaming.StreamingContext@2ac5bb7\n"
+    }, {
+      "metadata" : { },
+      "data" : {
+        "text/html" : ""
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 5,
+      "time" : "Took: 894 milliseconds, at 2017-2-14 15:18"
+    } ]
+  }, {
+    "metadata" : {
+      "id" : "51DEBED424464E8A9C884F626CD2C4BB"
+    },
+    "cell_type" : "markdown",
+    "source" : "### Listen twitter stream "
+  }, {
+    "metadata" : {
+      "id" : "75A17813B78F41248A03F352BA934CFD"
+    },
+    "cell_type" : "markdown",
+    "source" : "#### We're going to **filter** the tweets to only those containing the following words."
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "52F2DB82997D4CFE8ECC521B9B9FD711"
+    },
+    "cell_type" : "code",
+    "source" : "val filters = Array(\"spark\", \"scala\", \"arduino\")",
+    "outputs" : [ {
+      "name" : "stdout",
+      "output_type" : "stream",
+      "text" : "filters: Array[String] = Array(spark, scala, arduino)\n"
+    }, {
+      "metadata" : { },
+      "data" : {
+        "text/html" : ""
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 6,
+      "time" : "Took: 818 milliseconds, at 2017-2-14 15:18"
+    } ]
+  }, {
+    "metadata" : {
+      "id" : "B5476AFB1AC74F68B2A103FE87F8512C"
+    },
+    "cell_type" : "markdown",
+    "source" : "#### Create the twitter listeners"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "416423D07466487696E7FD37EF7BA02E"
+    },
+    "cell_type" : "code",
+    "source" : "val twitterStream = TwitterUtils.createStream(ssc, None, filters)",
+    "outputs" : [ {
+      "name" : "stdout",
+      "output_type" : "stream",
+      "text" : "twitterStream: org.apache.spark.streaming.dstream.ReceiverInputDStream[twitter4j.Status] = org.apache.spark.streaming.twitter.TwitterInputDStream@536c93c0\n"
+    }, {
+      "metadata" : { },
+      "data" : {
+        "text/html" : ""
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 7,
+      "time" : "Took: 1 second 368 milliseconds, at 2017-2-14 15:18"
+    } ]
+  }, {
+    "metadata" : {
+      "id" : "88977C90605648F59629B94AA64DE392"
+    },
+    "cell_type" : "markdown",
+    "source" : "#### Count by hashtag and sort  "
+  }, {
+    "metadata" : {
+      "id" : "E3D51D33E8EF46EE9FD09A16FE19E9D1"
+    },
+    "cell_type" : "markdown",
+    "source" : "##### The windows are `60s` long"
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "7F2C9EE5E5A54863853FC0F77B3F7E63"
+    },
+    "cell_type" : "code",
+    "source" : "import StreamingContext._\nval hashTags = twitterStream.flatMap(status => status.getText.split(\" \").filter(_.startsWith(\"#\")))\n\nval topCounts60 = hashTags.map((_, 1)).reduceByKeyAndWindow(_ + _, Seconds(60))\n                          .map{case (topic, count) => (count, topic)}\n                          .transform(_.sortByKey(false))",
+    "outputs" : [ {
+      "name" : "stdout",
+      "output_type" : "stream",
+      "text" : "import StreamingContext._\nhashTags: org.apache.spark.streaming.dstream.DStream[String] = org.apache.spark.streaming.dstream.FlatMappedDStream@1ae7f77b\ntopCounts60: org.apache.spark.streaming.dstream.DStream[(Int, String)] = org.apache.spark.streaming.dstream.TransformedDStream@7328ba09\n"
+    }, {
+      "metadata" : { },
+      "data" : {
+        "text/html" : ""
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 8,
+      "time" : "Took: 2 seconds 291 milliseconds, at 2017-2-14 15:18"
+    } ]
+  }, {
+    "metadata" : {
+      "id" : "6FB21C29351B4DA8BB28E5DBEB5C5FB8"
+    },
+    "cell_type" : "markdown",
+    "source" : "##### Creating the text output to be updated by the stream of result "
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "output_stream_collapsed" : true,
+      "collapsed" : false,
+      "id" : "E82155D0F4D4406B8C8CAB42E23B8F06"
+    },
+    "cell_type" : "code",
+    "source" : "val result = ul(10)\nresult",
+    "outputs" : [ {
+      "name" : "stdout",
+      "output_type" : "stream",
+      "text" : "result: notebook.front.widgets.HtmlList = <HtmlList widget>\nres12: notebook.front.widgets.HtmlList = <HtmlList widget>\n"
+    }, {
+      "metadata" : { },
+      "data" : {
+        "text/html" : "<ul data-bind=\"foreach: value\"><li data-bind=\"html: $data\"></li><script data-this=\"{&quot;valueId&quot;:&quot;anona19d1160cf524befa7c1d8ab34e24d48&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/\nreq(\n['observable', 'knockout'],\nfunction (O, ko) {\n  ko.applyBindings({\n      value: O.makeObservable(valueId)\n    },\n    this\n  );\n});\n                            /*]]>*/</script></ul>"
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 9,
+      "time" : "Took: 1 second 53 milliseconds, at 2017-2-14 15:18"
+    } ]
+  }, {
+    "metadata" : {
+      "id" : "A46B7257A3F04D02802B802CDA501E5B"
+    },
+    "cell_type" : "markdown",
+    "source" : "##### Let's show the 10 first hashtag every window "
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "3E2C6F9DD59F4EF288CF2FA32876E70A"
+    },
+    "cell_type" : "code",
+    "source" : "// Print popular hashtags\ntopCounts60.foreachRDD(rdd => {\n  val topList = rdd.take(10).toList\n  val r = topList.map{case (count, tag) => s\"$tag: $count\"}\n  result(r)\n})",
+    "outputs" : [ {
+      "metadata" : { },
+      "data" : {
+        "text/html" : ""
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 10,
+      "time" : "Took: 1 second 272 milliseconds, at 2017-2-14 15:18"
+    } ]
+  }, {
+    "metadata" : {
+      "id" : "06DFCE121A1548039913D24FE87ABCBC"
+    },
+    "cell_type" : "markdown",
+    "source" : "### Show the Geolocations\n\npossible bug: new version of notebook has moved GeoPointsChart one level lower to widgets.CHARTS.GeoPointsChart "
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "A658925DCAB243F1856156A084E6A0C6"
+    },
+    "cell_type" : "code",
+    "source" : "val geo = widgets.charts.GeoPointsChart(Seq((0d,0d, \"init\")))\ngeo",
+    "outputs" : [ {
+      "name" : "stdout",
+      "output_type" : "stream",
+      "text" : "geo: notebook.front.widgets.charts.GeoPointsChart[Seq[(Double, Double, String)]] = <GeoPointsChart widget>\nres16: notebook.front.widgets.charts.GeoPointsChart[Seq[(Double, Double, String)]] = <GeoPointsChart widget>\n"
+    }, {
+      "metadata" : { },
+      "data" : {
+        "text/html" : "<div>\n      <script data-this=\"{&quot;dataId&quot;:&quot;anon88fead6473445afcc1743586e921d567&quot;,&quot;dataInit&quot;:[{&quot;_1&quot;:0.0,&quot;_2&quot;:0.0}],&quot;genId&quot;:&quot;913696048&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/req(['../javascripts/notebook/playground','../javascripts/notebook/magic/geoPointsChart'], \n      function(playground, _magicgeoPointsChart) {\n        // data ==> data-this (in observable.js's scopedEval) ==> this in JS => { dataId, dataInit, ... }\n        // this ==> scope (in observable.js's scopedEval) ==> this.parentElement ==> div.container below (toHtml)\n\n        playground.call(data,\n                        this\n                        ,\n                        {\n    \"f\": _magicgeoPointsChart,\n    \"o\": {\"lat\":\"_1\",\"lon\":\"_2\",\"width\":600,\"height\":400,\"rField\":null,\"colorField\":null}\n  }\n  \n                        \n                        \n                      );\n      }\n    );/*]]>*/</script>\n    <div>\n      <span class=\"chart-total-item-count\"><p data-bind=\"text: value\"><script data-this=\"{&quot;valueId&quot;:&quot;anon3ae296bc4b0ccd982d0fa1ffc7406f4c&quot;,&quot;initialValue&quot;:&quot;1&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/\nreq(\n['observable', 'knockout'],\nfunction (O, ko) {\n  ko.applyBindings({\n      value: O.makeObservable(valueId, initialValue)\n    },\n    this\n  );\n});\n        /*]]>*/</script></p> entries total</span>\n      <span class=\"chart-sampling-warning\"><p data-bind=\"text: value\"><script data-this=\"{&quot;valueId&quot;:&quot;anond3a9e98e72232baee2f5ec62a1f071e5&quot;,&quot;initialValue&quot;:&quot;&quot;}\" type=\"text/x-scoped-javascript\">/*<![CDATA[*/\nreq(\n['observable', 'knockout'],\nfunction (O, ko) {\n  ko.applyBindings({\n      value: O.makeObservable(valueId, initialValue)\n    },\n    this\n  );\n});\n        /*]]>*/</script></p></span>\n      <div>\n      </div>\n    </div></div>"
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 11,
+      "time" : "Took: 1 second 427 milliseconds, at 2017-2-14 15:18"
+    } ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "output_stream_collapsed" : true,
+      "collapsed" : false,
+      "id" : "EBBD0CEA30CC4284B28FECAB7AADEB41"
+    },
+    "cell_type" : "code",
+    "source" : "twitterStream .window(Seconds(60), Seconds(6))  \n              . filter{ s => \n                s.getGeoLocation() != null\n              }\n              .map(s => (s.getGeoLocation().getLatitude(), s.getGeoLocation().getLongitude(), s.getText()))\n              .foreachRDD{rdd => \n                geo.applyOn(rdd.take(100))\n              }",
+    "outputs" : [ {
+      "metadata" : { },
+      "data" : {
+        "text/html" : ""
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 12,
+      "time" : "Took: 1 second 156 milliseconds, at 2017-2-14 15:18"
+    } ]
+  }, {
+    "metadata" : {
+      "id" : "79D2DE713F7A4C448199361D61EFEE9E"
+    },
+    "cell_type" : "markdown",
+    "source" : "###  Start listening twitter"
+  }, {
+    "metadata" : {
+      "id" : "4742555D38FD4BB3913A8DF54A8257B8"
+    },
+    "cell_type" : "markdown",
+    "source" : "This will listen the twitter stream, and the computation above will update the `resuilt` every `2s` using the last `60s` of values."
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "563BCA2F383C46E78F13EE20BB34E444"
+    },
+    "cell_type" : "code",
+    "source" : "ssc.start()",
+    "outputs" : [ {
+      "metadata" : { },
+      "data" : {
+        "text/html" : ""
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 13,
+      "time" : "Took: 1 second 495 milliseconds, at 2017-2-14 15:18"
+    } ]
+  }, {
+    "metadata" : {
+      "id" : "A4B9AF125E2646DB8CB7E6C209074FE6"
+    },
+    "cell_type" : "markdown",
+    "source" : "### Stop listening twitter "
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : false,
+      "id" : "8E27754EE899432E87389961D529BF3B"
+    },
+    "cell_type" : "code",
+    "source" : "// commented to all 'run all' :-D\n//ssc.stop()",
+    "outputs" : [ {
+      "metadata" : { },
+      "data" : {
+        "text/html" : ""
+      },
+      "output_type" : "execute_result",
+      "execution_count" : 17,
+      "time" : "Took: 22 seconds 337 milliseconds, at 2017-2-13 20:30"
+    } ]
+  }, {
+    "metadata" : {
+      "trusted" : true,
+      "input_collapsed" : false,
+      "collapsed" : true,
+      "id" : "00F31732D0C9493794EB6E93CCE43BBB"
+    },
+    "cell_type" : "code",
+    "source" : "",
+    "outputs" : [ ]
+  } ],
+  "nbformat" : 4
+}
