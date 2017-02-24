@@ -236,8 +236,14 @@
       "id" : "6F2100E48EB244DD872C7AD0D84F4278"
     },
     "cell_type" : "code",
-    "source" : "\ncase class Temperature(host: String, timestamp: String, temperature: Double)\n",
+    "source" : "\ncase class Temperature(host: String, timestamp: java.sql.Timestamp, temperature: Double)\n",
     "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "1025C632819746A8AB3059C99A2DCBE7"
+    },
+    "cell_type" : "markdown",
+    "source" : "Note: only the collect() really gets the data converted to an array of Temperature records. Without this the type is still the oiginal untyped dataset.\n"
   }, {
     "metadata" : {
       "trusted" : true,
@@ -246,7 +252,7 @@
       "id" : "D5DF7C5F0B964CC684C71A954F59C871"
     },
     "cell_type" : "code",
-    "source" : "val temps = dfrpi02.as[Temperature]",
+    "source" : "val temps = dfrpi02.as[Temperature].collect()",
     "outputs" : [ ]
   }, {
     "metadata" : {
@@ -256,8 +262,14 @@
       "id" : "0B05288240FC4C84863A244FA3C0A9D6"
     },
     "cell_type" : "code",
-    "source" : "temps.show()",
+    "source" : "TimeseriesChart(temps, fields=Some((\"timestamp\", \"temperature\")), maxPoints=10000, tickFormat=\"%Y-%m-%d\")",
     "outputs" : [ ]
+  }, {
+    "metadata" : {
+      "id" : "E13DB6B747DB40E385618000855CA7C2"
+    },
+    "cell_type" : "markdown",
+    "source" : "## Typed Data Sets\ntry to create a typed data set with a case class.\n"
   }, {
     "metadata" : {
       "trusted" : true,
@@ -266,7 +278,7 @@
       "id" : "A5BDF27B6D32459FB271F30C7052C5A8"
     },
     "cell_type" : "code",
-    "source" : "",
+    "source" : "case class Person(name: String, zip: Long)\nval df = sqlContext.read.json(sc.parallelize(\"\"\"{\"zip\": 94709, \"name\": \"Michael\"}\"\"\" :: Nil))\ndf.as[Person].collect()",
     "outputs" : [ ]
   } ],
   "nbformat" : 4
